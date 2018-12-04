@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,16 +20,8 @@ import javax.persistence.Table;
 @Table(name="professor")
 public class Professor implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-
-	
-
-
-	
 	@Id
 	@GeneratedValue(strategy =GenerationType.AUTO)
 	
@@ -40,8 +34,9 @@ public class Professor implements Serializable {
 	@Column(name="senha")
 	private String senha;
 	
-	@OneToMany(mappedBy="idprofessor",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	private List<Curso>cursos;
+	@ManyToMany
+    @JoinTable(name="professor_disciplina", joinColumns= {@JoinColumn(name="idprofessor")}, inverseJoinColumns = {@JoinColumn(name="iddisciplina")})
+	private List<Disciplina> disciplinas;
 
 	public Long getIdProfessor() {
 		return idProfessor;
@@ -75,19 +70,15 @@ public class Professor implements Serializable {
 		this.senha = senha;
 	}
 
-	public List<Curso> getCursos() {
-		return cursos;
+	public List<Disciplina> getDisciplinas() {
+		return disciplinas;
 	}
 
-	public void setCursos(List<Curso> cursos) {
-		this.cursos = cursos;
+	public void setDisciplinas(List<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
 	}
 	
-
 	
-	 
-	
-	 
 	
 	
 }
