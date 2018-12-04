@@ -23,25 +23,25 @@ public class CursoResource {
 	@Autowired
 	CursoService cursoService;
 	
-	//busca todos os cursos
+	//endpoint busca todos os cursos
 	@GetMapping("/curso")
 	public List<Curso> buscaTodosCursos(){ 
 		return cursoService.buscarTodosCurso();
 	}	
 		
-	//criar o curso
+	//endpoint criar o curso
 	@PostMapping("/curso")
 	public Curso salvaCurso(@RequestBody Curso curso) {
 		return cursoService.salvarCurso(curso);
 	}
 	
-	//atualizar curso
+	//endpoint atualizar curso
 	@PutMapping("/curso")
 	public Curso atualizaCurso(@RequestBody Curso curso) {
 		return cursoService.atualizarCurso(curso);
 	}
 	
-	//deletar curso
+	//endpoint deletar curso
 	@DeleteMapping("/curso")
 	public void deletaCurso(@RequestBody Curso curso) {
 		cursoService.deletarCurso(curso);

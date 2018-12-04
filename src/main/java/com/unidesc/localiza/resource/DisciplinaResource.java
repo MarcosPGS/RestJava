@@ -22,25 +22,25 @@ public class DisciplinaResource {
 	@Autowired
 	DisciplinaService disciplinaService;
 	
-	//buscar todas as disciplinas
+	//endpoint buscar todas as disciplinas
 	@GetMapping("/disciplina")
 	public List<Disciplina> buscaTodasDisciplinas(){ 
 		return disciplinaService.buscarTodasDisciplina();
 	}
 	
-	//criar disciplina
+	//endpoint criar disciplina
 	@PostMapping("/disciplina")
 	public Disciplina salvaDisciplina(@RequestBody Disciplina disciplina) {
 		return disciplinaService.salvarDisciplina(disciplina);
 	}
 	
-	//atualizar disciplina
+	//endpoint atualizar disciplina
 	@PutMapping("disciplina")
 	public Disciplina atualizarDisciplina(@RequestBody Disciplina disciplina) {
 		return disciplinaService.atualizarDisciplina(disciplina);
 	}
 	
-	//Deletar disiciplina
+	//endpoint Deletar disiciplina
 	@DeleteMapping("/disciplina")
 	public void deletaDisciplina(@RequestBody Disciplina disciplina ) {
 		disciplinaService.deletarDisciplina(disciplina);
