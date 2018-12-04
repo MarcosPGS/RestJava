@@ -1,5 +1,9 @@
 package com.unidesc.localiza.repository;
 
-public interface CursoRepositoryQuery {
 
+
+public interface CursoRepositoryQuery {
+	
+	
+	
 }

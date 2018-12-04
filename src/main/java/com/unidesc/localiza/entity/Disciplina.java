@@ -1,12 +1,16 @@
 package com.unidesc.localiza.entity;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -27,9 +31,12 @@ public class Disciplina implements Serializable {
 	private String bloco;
 	@Column(name="sala")
 	private String sala;
+	@Column(name="dia_semana")
+	private String diaSemana;
 	
-	@Column(name="idcurso")
-	private Long idcurso;
+	@ManyToMany
+    @JoinTable(name="disciplina_curso", joinColumns= {@JoinColumn(name="iddisciplina")}, inverseJoinColumns = {@JoinColumn(name="idcurso")})
+	private List<Curso> cursos;
 
 	public Long getIdDisciplina() {
 		return idDisciplina;
@@ -63,17 +70,22 @@ public class Disciplina implements Serializable {
 		this.sala = sala;
 	}
 
-	public Long getIdcurso() {
-		return idcurso;
+	public String getDiaSemana() {
+		return diaSemana;
 	}
 
-	public void setIdcurso(Long idcurso) {
-		this.idcurso = idcurso;
+	public void setDiaSemana(String diaSemana) {
+		this.diaSemana = diaSemana;
 	}
-	
-	
-	
-	
+
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(List<Curso> cursos) {
+		this.cursos = cursos;
+	}
+
 	
 	
 

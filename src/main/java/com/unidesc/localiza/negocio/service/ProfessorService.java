@@ -18,7 +18,11 @@ public class ProfessorService {
 		return professorRepository.buscarNome(nome);
 	}
 	
+	
 	public List<Professor> buscarTodos(){
 		return professorRepository.findAll();
 	}
+	
+	
+	
 }
