@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.unidesc.localiza.entity.Professor;
 import com.unidesc.localiza.negocio.service.ProfessorService;
 import com.unidesc.localiza.repository.ProfessorRepository;
 
+@CrossOrigin//serve para resolver o problema de domínio cruzado
 @RestController
 @RequestMapping(value="/api")
 public class ProfessorResource {
@@ -32,6 +34,7 @@ public class ProfessorResource {
 	public List<Professor>buscaTodos(){
 		return professorService.buscarTodos();
 	}
+	
 	
 	//endpoint busca por nome
 	@GetMapping("/professor/nome/{nome}")
