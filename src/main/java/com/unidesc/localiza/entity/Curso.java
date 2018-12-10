@@ -31,35 +31,53 @@ public class Curso implements Serializable {
 	private Long idCurso;
 	@Column(name="nome")
 	private String nome;
-	@Column(name="semestre")
-	private String semestre;
-	@Column(name="turno")
-	private String turno;
 	
+	
+	@ManyToMany
+	@JoinTable(name="curso_semestre", joinColumns = {@JoinColumn(name="idcurso")}, inverseJoinColumns= {@JoinColumn(name="idsemestre")})
+	private List<Semestre> semestres;
+
+	@ManyToMany
+	@JoinTable(name="curso_turno", joinColumns= {@JoinColumn(name="idcurso")}, inverseJoinColumns= {@JoinColumn(name="idturno")})
+	private List<Turno> turno;
+
 	public Long getIdCurso() {
 		return idCurso;
 	}
+
 	public void setIdCurso(Long idCurso) {
 		this.idCurso = idCurso;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getSemestre() {
-		return semestre;
+
+	public List<Semestre> getSemestres() {
+		return semestres;
 	}
-	public void setSemestre(String semestre) {
-		this.semestre = semestre;
+
+	public void setSemestres(List<Semestre> semestres) {
+		this.semestres = semestres;
 	}
-	public String getTurno() {
+
+	public List<Turno> getTurno() {
 		return turno;
 	}
-	public void setTurno(String turno) {
+
+	public void setTurno(List<Turno> turno) {
 		this.turno = turno;
 	}
+
+	
+	
+	
+	
+	
 	
 	
 	

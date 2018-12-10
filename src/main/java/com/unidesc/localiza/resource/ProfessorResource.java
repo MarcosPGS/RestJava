@@ -59,7 +59,7 @@ public class ProfessorResource {
 		return professorService.atualizarProfessor(professor);
 	}
 	
-	//endpoint deleatr professor
+	//endpoint deletar professor
 	@DeleteMapping("/professor")
 	public void deletarProfessor(@RequestBody Professor professor) {
 		professorService.deletarProfessor(professor);
