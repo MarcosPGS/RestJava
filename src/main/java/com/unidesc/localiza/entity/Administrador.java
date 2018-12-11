@@ -27,6 +27,9 @@ public class Administrador implements Serializable {
 	private String login;
 	@Column(name="senha")
 	private String senha;
+	@Column(name="email")
+	private String email;
+	
 	public Long getIdAdministardor() {
 		return idAdministardor;
 	}
@@ -51,6 +54,14 @@ public class Administrador implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
 	
 	
 	
