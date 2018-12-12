@@ -29,6 +29,9 @@ public class Disciplina implements Serializable {
 	@Column(name="nome")
 	private String nome;
 	
+	@ManyToMany
+    @JoinTable(name="disciplina_diasemana", joinColumns= {@JoinColumn(name="iddisciplina")}, inverseJoinColumns = {@JoinColumn(name="iddiasemana")})
+	private List<DiaSemana> diaSemanas;
 	
 	@ManyToMany
     @JoinTable(name="disciplina_curso", joinColumns= {@JoinColumn(name="iddisciplina")}, inverseJoinColumns = {@JoinColumn(name="idcurso")})
@@ -36,7 +39,47 @@ public class Disciplina implements Serializable {
 
 	@ManyToMany
 	@JoinTable(name="disciplina_local", joinColumns= {@JoinColumn(name="iddisciplina")}, inverseJoinColumns = {@JoinColumn(name="idlocal")})
-	private List<Local> local;
+	private List<Local> locals;
+
+	public Long getIdDisciplina() {
+		return idDisciplina;
+	}
+
+	public void setIdDisciplina(Long idDisciplina) {
+		this.idDisciplina = idDisciplina;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public List<DiaSemana> getDiaSemanas() {
+		return diaSemanas;
+	}
+
+	public void setDiaSemanas(List<DiaSemana> diaSemanas) {
+		this.diaSemanas = diaSemanas;
+	}
+
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(List<Curso> cursos) {
+		this.cursos = cursos;
+	}
+
+	public List<Local> getLocals() {
+		return locals;
+	}
+
+	public void setLocals(List<Local> locals) {
+		this.locals = locals;
+	}
 
 	
 	
