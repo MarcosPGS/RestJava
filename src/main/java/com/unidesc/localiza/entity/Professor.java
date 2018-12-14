@@ -32,6 +32,8 @@ public class Professor implements Serializable {
 	@Column(name="login")
 	private String login;
 	@Column(name="senha")
+	
+	
 	private String senha;
 	
 	@ManyToMany
