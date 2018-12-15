@@ -3,7 +3,8 @@ package com.unidesc.localiza.negocio.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -16,10 +17,13 @@ public class ProfessorService {
 	@Autowired
 	ProfessorRepository professorRepository;
 	
-	public Professor buscarPorNome(String nome) {
+	public List<Professor> buscarPorNome(String nome) {
 		return professorRepository.buscarNome(nome);
 	}
 	
+	public Page<Professor> buscarPorNomeP(String nome, Pageable pageable) {
+		return professorRepository.buscarNomeP(nome, pageable);
+	}
 	
 	public List<Professor> buscarTodos(){
 		return professorRepository.findAll();

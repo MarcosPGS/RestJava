@@ -5,6 +5,8 @@ import static org.springframework.http.ResponseEntity.ok;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,14 +40,43 @@ public class ProfessorResource {
 	
 	//endpoint busca por nome
 	@GetMapping("/professor/nome/{nome}")
-	public ResponseEntity<Professor> buscaNome(@PathVariable String nome) {
-		Professor professorResultado = professorService.buscarPorNome(nome);
+	public ResponseEntity<List<Professor>> buscaNome(@PathVariable String nome) {
+		List<Professor> professorResultado = professorService.buscarPorNome(nome);
 		if(professorResultado == null){
             return ok(null);
         }
         return ok(professorResultado);
 		
 	}
+	
+	
+	
+	
+	
+	//endpoint busca por nome Paginada
+		@GetMapping("/professor/nomePaginacao") //Page = ele ja é uma lista;
+		public Page<Professor> buscaNomeP(String nome, Pageable pageable) {
+			
+			return professorService.buscarPorNomeP(nome, pageable);
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//endpoint criar professor
 	@PostMapping("/professor")
