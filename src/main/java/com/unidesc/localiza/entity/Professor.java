@@ -29,56 +29,42 @@ public class Professor implements Serializable {
 	private	Long idProfessor;
 	@Column(name="nome")
 	private String nome;
-	@Column(name="login")
-	private String login;
-	@Column(name="senha")
 	
-	
-	private String senha;
 	
 	@ManyToMany
     @JoinTable(name="professor_disciplina", joinColumns= {@JoinColumn(name="idprofessor")}, inverseJoinColumns = {@JoinColumn(name="iddisciplina")})
 	private List<Disciplina> disciplinas;
 
+
 	public Long getIdProfessor() {
 		return idProfessor;
 	}
+
 
 	public void setIdProfessor(Long idProfessor) {
 		this.idProfessor = idProfessor;
 	}
 
+
 	public String getNome() {
 		return nome;
 	}
+
 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
 
 	public List<Disciplina> getDisciplinas() {
 		return disciplinas;
 	}
 
+
 	public void setDisciplinas(List<Disciplina> disciplinas) {
 		this.disciplinas = disciplinas;
 	}
+
 	
 	
 	
