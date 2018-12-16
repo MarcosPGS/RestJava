@@ -1,11 +1,5 @@
 package com.unidesc.localiza.repository;
 
-
-
-
-
-
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

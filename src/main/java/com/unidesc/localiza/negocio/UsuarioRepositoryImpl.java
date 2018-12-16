@@ -16,14 +16,15 @@ import org.springframework.util.StringUtils;
 
 import com.unidesc.localiza.entity.Professor;
 import com.unidesc.localiza.entity.Usuario;
+import com.unidesc.localiza.repository.UsuarioRepositoryQuery;
 
 @Repository
-public class UsuarioRepositoryImpl {
+public class UsuarioRepositoryImpl implements UsuarioRepositoryQuery {
 
 	
 	@PersistenceContext
  	EntityManager manager;
-	//==================================== Busca Por nome ===========================================
+	//==================================== Busca Por Login ===========================================
 
 	public Usuario buscarLogin(String login) {
 		Usuario usuarioEncontado = null;

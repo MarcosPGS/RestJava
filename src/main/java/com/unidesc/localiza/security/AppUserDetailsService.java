@@ -16,17 +16,18 @@ import org.springframework.stereotype.Service;
 
 import com.unidesc.localiza.entity.Permissao;
 import com.unidesc.localiza.entity.Usuario;
+import com.unidesc.localiza.negocio.service.UsuarioService;
 import com.unidesc.localiza.repository.UsuarioRepository;
 
 @Service
 public class AppUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	UsuarioRepository usuarioRepository;//TODO: TROCAR PARA USUARIOSERVICE
+	UsuarioService usuarioService;//TODO: TROCAR PARA USUARIOSERVICE
 	
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-		Usuario usuarioSeguranca = usuarioRepository.buscarLogin(login);
+		Usuario usuarioSeguranca = usuarioService.buscarLogin(login);
 		
 		
 		

@@ -24,8 +24,10 @@ public class Permissao  implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="idpermissao")
 	private Long idPermissao;
+	
 	@Column(name="permissao")
 	private String permissao;
+	
 	public Long getIdPermissao() {
 		return idPermissao;
 	}
