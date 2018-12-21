@@ -32,7 +32,8 @@ public class Professor implements Serializable {
 	
 	
 	@ManyToMany
-    @JoinTable(name="professor_disciplina", joinColumns= {@JoinColumn(name="idprofessor")}, inverseJoinColumns = {@JoinColumn(name="iddisciplina")})
+    @JoinTable(name="professor_disciplina", joinColumns= {@JoinColumn(name="idprofessor")},
+    inverseJoinColumns = {@JoinColumn(name="iddisciplina")})
 	private List<Disciplina> disciplinas;
 
 

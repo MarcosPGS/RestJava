@@ -14,6 +14,10 @@ public class CursoService {
 	@Autowired
 	CursoRepository cursoRepository;
 	
+	public List<Curso> buscarPorNome(String nome){
+		return cursoRepository.buscarPorNomeCurso(nome);
+	}
+	
 	public List<Curso> buscarTodosCurso(){
 		return cursoRepository.findAll();
 	}

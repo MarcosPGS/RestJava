@@ -16,6 +16,10 @@ public class TurnoService {
 	@Autowired
 	TurnoRepository turnoRepository;
 	
+	public Turno bucarPorTurno(String descricao) {
+		return turnoRepository.buscarPorTurno(descricao);
+	}
+	
 	public List<Turno> buscarTodosTurnos(){
 		return turnoRepository.findAll();
 	}

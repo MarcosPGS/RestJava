@@ -15,6 +15,10 @@ public class DiaSemanaService {
 	@Autowired
 	DiaSemanaRepository diaSemanaRepository;
 	
+	public List<DiaSemana> buscarPorDiaSemana(String descricao){
+		return diaSemanaRepository.buscarPorDiaSemana(descricao);
+	}
+	
 	public List<DiaSemana> buscarTodosDias(){
 		return diaSemanaRepository.findAll();
 	}

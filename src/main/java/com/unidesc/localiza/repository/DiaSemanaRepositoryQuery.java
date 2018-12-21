@@ -1,5 +1,10 @@
 package com.unidesc.localiza.repository;
 
-public interface DiaSemanaRepositoryQuery {
+import java.util.List;
 
+import com.unidesc.localiza.entity.DiaSemana;
+
+public interface DiaSemanaRepositoryQuery {
+ 
+	public List<DiaSemana> buscarPorDiaSemana(String descricao);
 }

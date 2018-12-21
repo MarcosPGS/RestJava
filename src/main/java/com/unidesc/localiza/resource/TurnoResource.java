@@ -1,11 +1,13 @@
 package com.unidesc.localiza.resource;
 
 import java.util.List;
-
+import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +29,16 @@ public class TurnoResource {
 		return turnoService.buscarTodosTurnos();
 	}
 	
+	
+	@GetMapping("/turno/descricao/{descricao}")
+	public ResponseEntity<Turno> buscaPorTurno(@PathVariable String descricao){
+		Turno turnoEncontrado = turnoService.bucarPorTurno(descricao);
+		if(turnoEncontrado == null) {
+			return ok(null);
+		}
+		return ok(turnoEncontrado);
+		
+	}
 	@PostMapping("/turno")
 	public Turno criaTurno(@RequestBody Turno turno) {
 		return turnoService.criarTurno(turno);

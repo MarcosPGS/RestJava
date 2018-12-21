@@ -15,6 +15,10 @@ public class SemestreService {
 	@Autowired
 	SemestreRepository semestreRepository;
 	
+	public Semestre buscarPorSemestre(String semestre) {
+		return semestreRepository.buscarPorSemestre(semestre);
+	}
+	
 	public List<Semestre> buscarTodosSemestres(){
 		return semestreRepository.findAll();
 	}

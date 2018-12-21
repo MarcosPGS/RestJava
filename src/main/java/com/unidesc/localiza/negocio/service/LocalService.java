@@ -15,6 +15,10 @@ public class LocalService {
 	@Autowired
 	LocalRepository localRepository;
 	
+	public List<Local> buscarPorBloco(String bloco) {
+		return localRepository.buscaPorBloco(bloco);
+	}
+	
 	public List<Local> buscarTodosLocais(){
 		return localRepository.findAll();
 	}
