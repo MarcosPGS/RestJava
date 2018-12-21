@@ -36,8 +36,8 @@ public class UsuarioResource {
 	}
 	
 	@PostMapping("/usuario")
-	public Usuario criarUsuario(@RequestBody Usuario usuario) {
-		return usuarioService.criarUsuario(usuario);
+	public Usuario salvaUsuario(@RequestBody Usuario usuario) {
+		return usuarioService.salvarUsuario(usuario);
 	}
 
 	@PutMapping("/usuario")

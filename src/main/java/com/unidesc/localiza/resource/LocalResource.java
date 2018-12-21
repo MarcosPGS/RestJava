@@ -40,8 +40,8 @@ public class LocalResource {
 	}
 	
 	@PostMapping("/local")
-	public Local criaLocal(@RequestBody Local local) {
-		return localService.criarLocal(local);
+	public Local salvaLocal(@RequestBody Local local) {
+		return localService.salvarLocal(local);
 	}
 	
 	@PutMapping("/local")

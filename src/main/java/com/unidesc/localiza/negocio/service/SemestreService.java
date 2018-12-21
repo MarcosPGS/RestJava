@@ -23,7 +23,7 @@ public class SemestreService {
 		return semestreRepository.findAll();
 	}
 	
-	public Semestre criarSemestre(@RequestBody Semestre semestre) {
+	public Semestre salvarSemestre(@RequestBody Semestre semestre) {
 		return semestreRepository.save(semestre);
 	}
 	public Semestre atualizarSemestre(@RequestBody Semestre semestre) {

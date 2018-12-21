@@ -41,8 +41,8 @@ public class DiaSemanaResource {
 	}
 	
 	@PostMapping("/diasemana")
-	public DiaSemana criaDiaSemana(@RequestBody DiaSemana diaSemana) {
-		return diaSemanaService.criarDiaSemana(diaSemana);
+	public DiaSemana salvaDiaSemana(@RequestBody DiaSemana diaSemana) {
+		return diaSemanaService.salvarDiaSemana(diaSemana);
 	}
 	
 	@PutMapping("/diasemana")

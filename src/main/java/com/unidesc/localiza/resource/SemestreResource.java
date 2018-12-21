@@ -42,8 +42,8 @@ public class SemestreResource {
 	}
 	
 	@PostMapping("/semestre")
-	public Semestre criaSemestre(@RequestBody Semestre semestre) {
-		return semestreService.criarSemestre(semestre);
+	public Semestre salvaSemestre(@RequestBody Semestre semestre) {
+		return semestreService.salvarSemestre(semestre);
 	}
 	
 	@PutMapping("/semestre")

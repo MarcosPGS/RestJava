@@ -24,7 +24,7 @@ public class UsuarioService {
 		return usuarioRepository.buscarLogin(login);
 	}
 		
-	public Usuario criarUsuario(@RequestBody Usuario usuario) {
+	public Usuario salvarUsuario(@RequestBody Usuario usuario) {
 		return usuarioRepository.save(usuario);
 	}
 	

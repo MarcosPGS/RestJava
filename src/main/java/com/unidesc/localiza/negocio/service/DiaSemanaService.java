@@ -23,7 +23,7 @@ public class DiaSemanaService {
 		return diaSemanaRepository.findAll();
 	}
 	
-	public DiaSemana criarDiaSemana(@RequestBody DiaSemana diaSemana) {
+	public DiaSemana salvarDiaSemana(@RequestBody DiaSemana diaSemana) {
 		return diaSemanaRepository.save(diaSemana);
 	}
 	

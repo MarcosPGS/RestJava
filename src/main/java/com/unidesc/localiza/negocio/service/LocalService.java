@@ -23,7 +23,7 @@ public class LocalService {
 		return localRepository.findAll();
 	}
 	
-	public Local criarLocal(@RequestBody Local local) {
+	public Local salvarLocal(@RequestBody Local local) {
 		return localRepository.save(local);
 	}
 	

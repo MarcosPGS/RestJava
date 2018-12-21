@@ -40,8 +40,8 @@ public class TurnoResource {
 		
 	}
 	@PostMapping("/turno")
-	public Turno criaTurno(@RequestBody Turno turno) {
-		return turnoService.criarTurno(turno);
+	public Turno salvaTurno(@RequestBody Turno turno) {
+		return turnoService.salvarTurno(turno);
 	}
 	
 	@PutMapping("/turno")

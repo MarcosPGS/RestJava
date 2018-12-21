@@ -24,7 +24,7 @@ public class TurnoService {
 		return turnoRepository.findAll();
 	}
 	
-	public Turno criarTurno(@RequestBody Turno turno) {
+	public Turno salvarTurno(@RequestBody Turno turno) {
 		return turnoRepository.save(turno);
 	}
 	
