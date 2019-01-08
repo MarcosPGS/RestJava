@@ -108,5 +108,39 @@ public class DisciplinaRepositoryImpl implements DisciplinaRepositoryQuery {
 		
 	}
 
+	@Override
+	public Disciplina buscarPorNomeDisciplinaUnico(String nome) {
+		 Disciplina disciplinaEncontrada = null;
+		 try {
+			
+		
+		 CriteriaBuilder builder = manager.getCriteriaBuilder();
+		 CriteriaQuery<Disciplina> disciplinaCq = builder.createQuery(Disciplina.class);
+		 Root<Disciplina> disciplinaRoot = disciplinaCq.from(Disciplina.class);
+		 
+		 Predicate[] predicates = criarRestricaoUnico(nome, builder, disciplinaRoot);
+		 disciplinaCq.where(predicates);
+		 
+		 TypedQuery<Disciplina> typedQuery = manager.createQuery(disciplinaCq);
+		 
+		 disciplinaEncontrada = typedQuery.getSingleResult();
+		 
+		 return disciplinaEncontrada;
+		 } catch (Exception e) {
+				return disciplinaEncontrada;
+			}
+		 
+		}
+
+	private Predicate[] criarRestricaoUnico(String nome, CriteriaBuilder builder, Root<Disciplina> disciplinaRoot) {
+		List<Predicate> predicates = new ArrayList<>();
+		if(!StringUtils.isEmpty(nome)) {
+			predicates.add(builder.like(builder.lower(disciplinaRoot.get("nome")),"%" +  (nome.toLowerCase())+ "%"));
+		}
+		return predicates.toArray(new Predicate[predicates.size()]);
+	}
+
+		
+
 	
 }

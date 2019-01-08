@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.unidesc.localiza.entity.Professor;
+import com.unidesc.localiza.exceptions.ProfessorDuplicadoException;
 import com.unidesc.localiza.repository.ProfessorRepository;
 
 @Service
@@ -30,7 +31,12 @@ public class ProfessorService {
 	}
 	
 	
-	public Professor salvarProfessor(@RequestBody Professor professor) {
+	public Professor salvarProfessor(@RequestBody Professor professor) throws ProfessorDuplicadoException {
+		Professor professorEncontrado = professorRepository.buscarPorMatricula(professor.getMatricula());
+		if(professorEncontrado != null) {
+			throw new ProfessorDuplicadoException("Professor Duplicado!" + " ID: " +professorEncontrado.getIdProfessor() +
+					" Matricula: " + professorEncontrado.getMatricula());
+		}
 		return professorRepository.save(professor);
 	}
 	

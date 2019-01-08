@@ -54,5 +54,38 @@ public class DiaSemanaRepositoryImpl implements DiaSemanaRepositoryQuery {
 		
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
+	@Override
+	public DiaSemana buscarPorDiaSemanaUnico(String descricao) {
+			DiaSemana diaSemanaEncontrado = null;
+		
+		try {
+			CriteriaBuilder builder = manager.getCriteriaBuilder();
+			CriteriaQuery<DiaSemana> diaSemanaCq = builder.createQuery(DiaSemana.class);
+			Root<DiaSemana> diaSemanaRoot = diaSemanaCq.from(DiaSemana.class);
+			
+			Predicate[] predicates= criarRestricoesUnico(descricao,builder, diaSemanaRoot);
+			diaSemanaCq.where(predicates);
+			
+			TypedQuery< DiaSemana> typedQuery = manager.createQuery(diaSemanaCq);
+			 
+			diaSemanaEncontrado = typedQuery.getSingleResult();
+			return diaSemanaEncontrado;
+			
+		} catch (Exception e) {
+			return diaSemanaEncontrado;
+		}
+		
+	}
+	private Predicate[] criarRestricoesUnico(String descricao, CriteriaBuilder builder, Root<DiaSemana> diaSemanaRoot) {
+List<Predicate> predicates = new ArrayList<>();
+		
+		if(!StringUtils.isEmpty(descricao)) {
+			predicates.add(builder.like(builder.lower(diaSemanaRoot.get("descricao")), "%"+(descricao.toLowerCase())+"%" ));
+			
+		}
+		
+		return predicates.toArray(new Predicate[predicates.size()]);
+	}
+	
 
 }

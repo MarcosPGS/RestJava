@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.unidesc.localiza.entity.Curso;
+import com.unidesc.localiza.exceptions.CursoDuplicadoException;
 import com.unidesc.localiza.repository.CursoRepository;
 
 @Service
@@ -18,11 +19,16 @@ public class CursoService {
 		return cursoRepository.buscarPorNomeCurso(nome);
 	}
 	
+	
 	public List<Curso> buscarTodosCurso(){
 		return cursoRepository.findAll();
 	}
 	
-	public Curso salvarCurso(@RequestBody Curso curso) {
+	public Curso salvarCurso(@RequestBody Curso curso) throws CursoDuplicadoException {
+		Curso cursoEncotrado = cursoRepository.buscarPorNomeUnico(curso.getNome());
+		if(cursoEncotrado != null) {
+			throw new CursoDuplicadoException("Curso Duplicado!" + " ID: " + cursoEncotrado.getIdCurso());
+		}
 		return cursoRepository.save(curso);
 	}
 	

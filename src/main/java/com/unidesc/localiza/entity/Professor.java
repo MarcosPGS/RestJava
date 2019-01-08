@@ -29,6 +29,8 @@ public class Professor implements Serializable {
 	private	Long idProfessor;
 	@Column(name="nome")
 	private String nome;
+	@Column(name="matricula")
+	private String matricula;
 	
 	
 	@ManyToMany
@@ -57,6 +59,16 @@ public class Professor implements Serializable {
 	}
 
 
+	public String getMatricula() {
+		return matricula;
+	}
+
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
+
 	public List<Disciplina> getDisciplinas() {
 		return disciplinas;
 	}
@@ -65,6 +77,7 @@ public class Professor implements Serializable {
 	public void setDisciplinas(List<Disciplina> disciplinas) {
 		this.disciplinas = disciplinas;
 	}
+
 
 	
 	

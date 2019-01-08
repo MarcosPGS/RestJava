@@ -14,4 +14,7 @@ public interface ProfessorRepositoryQuery {
 	
 	public Page<Professor> buscarNomeP(String nome, Pageable pageable);
 
+
+	
+	public Professor buscarPorMatricula(String matricula);
 }

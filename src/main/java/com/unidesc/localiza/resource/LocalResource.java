@@ -1,8 +1,9 @@
 package com.unidesc.localiza.resource;
 
 import java.util.List;
-import static org.springframework.http.ResponseEntity.ok;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unidesc.localiza.entity.Local;
+import com.unidesc.localiza.exceptions.LocalDuplicadoException;
 import com.unidesc.localiza.negocio.service.LocalService;
 
 @CrossOrigin
@@ -34,14 +36,18 @@ public class LocalResource {
 	public ResponseEntity<List<Local>> buscaBloco(@PathVariable String bloco){
 		List<Local> blocoEncontrado = localService.buscarPorBloco(bloco);
 		if(blocoEncontrado == null) {
-			return ok(null);
+			return ResponseEntity.ok(null);
 		}
-		return ok(blocoEncontrado);
+		return ResponseEntity.ok(blocoEncontrado);
 	}
 	
 	@PostMapping("/local")
-	public Local salvaLocal(@RequestBody Local local) {
-		return localService.salvarLocal(local);
+	public ResponseEntity<Object> salvaLocal(@RequestBody Local local) {
+		try {
+			return ResponseEntity.ok().body(localService.salvarLocal(local));
+		} catch (LocalDuplicadoException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
 	}
 	
 	@PutMapping("/local")

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.unidesc.localiza.entity.DiaSemana;
+import com.unidesc.localiza.exceptions.DiaSemanaDuplicadoException;
 import com.unidesc.localiza.repository.DiaSemanaRepository;
 
 @Service
@@ -23,7 +24,12 @@ public class DiaSemanaService {
 		return diaSemanaRepository.findAll();
 	}
 	
-	public DiaSemana salvarDiaSemana(@RequestBody DiaSemana diaSemana) {
+	public DiaSemana salvarDiaSemana(@RequestBody DiaSemana diaSemana) throws DiaSemanaDuplicadoException {
+		DiaSemana diaSemanaEncontrado = diaSemanaRepository.buscarPorDiaSemanaUnico(diaSemana.getDescricao());
+		if(diaSemanaEncontrado != null) {
+			throw new DiaSemanaDuplicadoException("Dia Da Semana Duplicado! - " + "ID: "+ diaSemanaEncontrado.getIdDiaSemana());
+		}
+		
 		return diaSemanaRepository.save(diaSemana);
 	}
 	

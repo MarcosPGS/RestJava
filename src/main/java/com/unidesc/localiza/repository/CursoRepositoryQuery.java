@@ -7,5 +7,6 @@ import com.unidesc.localiza.entity.Curso;
 public interface CursoRepositoryQuery {
 	
 	public List<Curso> buscarPorNomeCurso(String nome);
+	public Curso buscarPorNomeUnico(String nome);
 	
 }

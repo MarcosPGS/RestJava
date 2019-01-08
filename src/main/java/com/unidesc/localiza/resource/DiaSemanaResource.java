@@ -1,8 +1,9 @@
 package com.unidesc.localiza.resource;
 
 import java.util.List;
-import static org.springframework.http.ResponseEntity.ok;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unidesc.localiza.entity.DiaSemana;
+import com.unidesc.localiza.exceptions.DiaSemanaDuplicadoException;
 import com.unidesc.localiza.negocio.service.DiaSemanaService;
 
 @CrossOrigin
@@ -30,9 +32,9 @@ public class DiaSemanaResource {
 	public ResponseEntity<List<DiaSemana>> buscaPorDiaSemana(@PathVariable String descricao){
 		List<DiaSemana> diaSemanaEncontrado = diaSemanaService.buscarPorDiaSemana(descricao);
 		if(diaSemanaEncontrado == null) {
-			return ok(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(diaSemanaEncontrado);
 		}
-		return ok(diaSemanaEncontrado);
+		return ResponseEntity.ok().body(diaSemanaEncontrado);
 	}
 	
 	@GetMapping("/diasemana")
@@ -41,8 +43,12 @@ public class DiaSemanaResource {
 	}
 	
 	@PostMapping("/diasemana")
-	public DiaSemana salvaDiaSemana(@RequestBody DiaSemana diaSemana) {
-		return diaSemanaService.salvarDiaSemana(diaSemana);
+	public ResponseEntity<Object> salvaDiaSemana(@RequestBody DiaSemana diaSemana) {
+		try {
+			return ResponseEntity.ok().body(diaSemanaService.salvarDiaSemana(diaSemana));
+		} catch (DiaSemanaDuplicadoException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
 	}
 	
 	@PutMapping("/diasemana")

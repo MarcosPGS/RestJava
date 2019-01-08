@@ -1,12 +1,15 @@
 package com.unidesc.localiza.resource;
 
-import static org.springframework.http.ResponseEntity.ok;
+//import static org.springframework.http.ResponseEntity.ok;
 
 import java.util.List;
+
+import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unidesc.localiza.entity.Professor;
+import com.unidesc.localiza.exceptions.ProfessorDuplicadoException;
 import com.unidesc.localiza.negocio.service.ProfessorService;
 import com.unidesc.localiza.repository.ProfessorRepository;
 
@@ -43,15 +47,12 @@ public class ProfessorResource {
 	public ResponseEntity<List<Professor>> buscaNome(@PathVariable String nome) {
 		List<Professor> professorResultado = professorService.buscarPorNome(nome);
 		if(professorResultado == null){
-            return ok(null);
-        }
-        return ok(professorResultado);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(professorResultado);
+          }
 		
-	}
-	
-	
-	
-	
+        return ResponseEntity.ok().body(professorResultado);
+		
+	}	
 	
 	//endpoint busca por nome Paginada
 		@GetMapping("/professor/nomePaginacao") //Page = ele ja é uma lista;
@@ -61,27 +62,14 @@ public class ProfessorResource {
 		}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	//endpoint criar professor
 	@PostMapping("/professor")
-	public Professor salvaProfessor(@RequestBody Professor professor) {
-		return professorService.salvarProfessor(professor);
+	public ResponseEntity<Object> salvaProfessor(@RequestBody Professor professor) {
+		try {
+			return ResponseEntity.ok().body(professorService.salvarProfessor(professor));
+		} catch (ProfessorDuplicadoException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
 	}
 	
 	//endpoint atualizar professor

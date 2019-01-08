@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.unidesc.localiza.entity.Turno;
+import com.unidesc.localiza.exceptions.TurnoDuplicadoException;
 import com.unidesc.localiza.repository.TurnoRepository;
 
 @Service
@@ -24,7 +25,12 @@ public class TurnoService {
 		return turnoRepository.findAll();
 	}
 	
-	public Turno salvarTurno(@RequestBody Turno turno) {
+	public Turno salvarTurno(@RequestBody Turno turno) throws TurnoDuplicadoException {
+		Turno turnoEncontrado = turnoRepository.buscarPorTurno(turno.getDescricao());
+		if(turnoEncontrado != null) {
+			throw new TurnoDuplicadoException("Turno Duplicado - " + "ID: " + turnoEncontrado.getIdTurno());
+		}
+		
 		return turnoRepository.save(turno);
 	}
 	

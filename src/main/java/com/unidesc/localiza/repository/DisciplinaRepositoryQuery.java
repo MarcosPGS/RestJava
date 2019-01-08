@@ -12,4 +12,6 @@ public interface DisciplinaRepositoryQuery {
 	public List<Disciplina> buscarPorNomeDisciplina(String nome);
 	
 	public Page<Disciplina> buscarNomePagina(String nome, Pageable pageable);
+	
+	public Disciplina buscarPorNomeDisciplinaUnico(String nome);
 }

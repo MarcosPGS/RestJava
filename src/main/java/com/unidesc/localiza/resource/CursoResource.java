@@ -3,10 +3,11 @@ package com.unidesc.localiza.resource;
 
 
 import java.util.List;
-import static org.springframework.http.ResponseEntity.ok;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unidesc.localiza.entity.Curso;
+import com.unidesc.localiza.exceptions.CursoDuplicadoException;
 import com.unidesc.localiza.negocio.service.CursoService;
 
 @CrossOrigin
@@ -42,16 +44,20 @@ public class CursoResource {
 		public ResponseEntity<List<Curso>> buscaNomeCurso(@PathVariable String nome){
 			List<Curso> cursoEncotrado = cursoService.buscarPorNome(nome);
 			if(cursoEncotrado == null) {
-				return ok(null);
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(cursoEncotrado);
 			}
-			return ok(cursoEncotrado);
+			return ResponseEntity.ok().body(cursoEncotrado);
 		}
 	
 	
 	//endpoint criar o curso
 	@PostMapping("/curso")
-	public Curso salvaCurso(@RequestBody Curso curso) {
-		return cursoService.salvarCurso(curso);
+	public ResponseEntity<Object> salvaCurso(@RequestBody Curso curso) {
+		try {
+			return ResponseEntity.ok().body(cursoService.salvarCurso(curso));
+		} catch (CursoDuplicadoException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
 	}
 	
 	//endpoint atualizar curso

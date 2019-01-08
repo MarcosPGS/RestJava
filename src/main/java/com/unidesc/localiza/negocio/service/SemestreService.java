@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.unidesc.localiza.entity.Semestre;
+import com.unidesc.localiza.exceptions.SemestreDuplicadoException;
 import com.unidesc.localiza.repository.SemestreRepository;
 
 @Service
@@ -23,7 +24,11 @@ public class SemestreService {
 		return semestreRepository.findAll();
 	}
 	
-	public Semestre salvarSemestre(@RequestBody Semestre semestre) {
+	public Semestre salvarSemestre(@RequestBody Semestre semestre) throws SemestreDuplicadoException {
+		Semestre semestreEncontrado = semestreRepository.buscarPorSemestre(semestre.getSemestre());
+		if(semestreEncontrado != null) {
+			throw new SemestreDuplicadoException("Semestre Duplicado! - " + "ID: " + semestreEncontrado.getIdSemestre());
+		}
 		return semestreRepository.save(semestre);
 	}
 	public Semestre atualizarSemestre(@RequestBody Semestre semestre) {

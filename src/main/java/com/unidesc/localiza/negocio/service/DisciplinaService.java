@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.unidesc.localiza.entity.Disciplina;
+import com.unidesc.localiza.exceptions.DisciplinaDuplicadaExcepton;
 import com.unidesc.localiza.repository.DisciplinaRepository;
 
 @Service
@@ -28,7 +29,11 @@ public class DisciplinaService {
 		return disciplinaRepository.findAll();
 	}
 	
-	public	Disciplina salvarDisciplina(@RequestBody Disciplina disciplina) {
+	public	Disciplina salvarDisciplina(@RequestBody Disciplina disciplina) throws DisciplinaDuplicadaExcepton {
+		Disciplina disciplinaEncontrada = disciplinaRepository.buscarPorNomeDisciplinaUnico(disciplina.getNome());
+		if(disciplinaEncontrada != null) {
+			throw new DisciplinaDuplicadaExcepton("Disciplina Duplicada! - " + "ID: "+ disciplinaEncontrada.getIdDisciplina());
+		}
 		return disciplinaRepository.save(disciplina);
 	}
 	

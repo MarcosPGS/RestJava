@@ -1,8 +1,8 @@
 package com.unidesc.localiza.resource;
 
 import java.util.List;
-import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unidesc.localiza.entity.Semestre;
+import com.unidesc.localiza.exceptions.SemestreDuplicadoException;
 import com.unidesc.localiza.negocio.service.SemestreService;
 
 @CrossOrigin
@@ -36,14 +37,18 @@ public class SemestreResource {
 	public ResponseEntity<Semestre> buscaSemestre(@PathVariable String semestre){
 		Semestre semestreEncontrado = semestreService.buscarPorSemestre(semestre);
 		if(semestreEncontrado == null) {
-			return ok(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(semestreEncontrado);
 		}
-		return ok(semestreEncontrado);
+		return ResponseEntity.ok().body(semestreEncontrado);
 	}
 	
 	@PostMapping("/semestre")
-	public Semestre salvaSemestre(@RequestBody Semestre semestre) {
-		return semestreService.salvarSemestre(semestre);
+	public ResponseEntity<Object> salvaSemestre(@RequestBody Semestre semestre) {
+		try {
+			return ResponseEntity.ok().body(semestreService.salvarSemestre(semestre));
+		} catch (SemestreDuplicadoException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
 	}
 	
 	@PutMapping("/semestre")

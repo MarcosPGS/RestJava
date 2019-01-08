@@ -11,7 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.springframework.dao.PermissionDeniedDataAccessException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -116,5 +116,44 @@ public class ProfessorRepositoryImpl implements ProfessorRepositoryQuery {
 		 typedQuery.setMaxResults(totalRegistroPorPagina);
 		
 	}
+	@Override
+	public Professor buscarPorMatricula(String matricula) {
+		
+
+		       Professor professorEncontradaAtiva = null;
+
+		       try{
+		           CriteriaBuilder builder = manager.getCriteriaBuilder();
+		           CriteriaQuery<Professor> professorCr = builder.createQuery(Professor.class);
+
+		           Root<Professor> professorRoot = professorCr.from(Professor.class);
+
+		           Predicate[] predicates = restricaoMatricula(matricula,builder, professorRoot);
+		           professorCr.where(predicates);
+
+
+		           TypedQuery<Professor> query = manager.createQuery(professorCr);
+
+		           professorEncontradaAtiva =  query.getSingleResult();
+		           return professorEncontradaAtiva;
+
+		       }catch (Exception e){
+		           return  professorEncontradaAtiva;
+
+		       }
+
+		    }
+
+		    private Predicate[] restricaoMatricula(String matricula, CriteriaBuilder builder, Root<Professor> professorRoot) {
+		       List<Predicate> predicates = new ArrayList<>();
+		       if (!StringUtils.isEmpty(matricula)){
+		           predicates.add(builder.equal(professorRoot.get("matricula"),matricula));
+		       }
+		       return predicates.toArray(new Predicate[predicates.size()]);
+		    }
+	
+	
+	
+	
 
 }

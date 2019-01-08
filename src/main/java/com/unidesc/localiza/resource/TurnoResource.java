@@ -1,8 +1,8 @@
 package com.unidesc.localiza.resource;
 
 import java.util.List;
-import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unidesc.localiza.entity.Turno;
+import com.unidesc.localiza.exceptions.TurnoDuplicadoException;
 import com.unidesc.localiza.negocio.service.TurnoService;
 
 @CrossOrigin
@@ -34,14 +35,18 @@ public class TurnoResource {
 	public ResponseEntity<Turno> buscaPorTurno(@PathVariable String descricao){
 		Turno turnoEncontrado = turnoService.bucarPorTurno(descricao);
 		if(turnoEncontrado == null) {
-			return ok(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(turnoEncontrado);
 		}
-		return ok(turnoEncontrado);
+		return ResponseEntity.ok().body(turnoEncontrado);
 		
 	}
 	@PostMapping("/turno")
-	public Turno salvaTurno(@RequestBody Turno turno) {
-		return turnoService.salvarTurno(turno);
+	public ResponseEntity<Object> salvaTurno(@RequestBody Turno turno) {
+		try {
+			return ResponseEntity.ok().body( turnoService.salvarTurno(turno));
+		} catch (TurnoDuplicadoException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
 	}
 	
 	@PutMapping("/turno")
