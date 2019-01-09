@@ -67,7 +67,7 @@ public class ProfessorRepositoryImpl implements ProfessorRepositoryQuery {
 	
 	
 	@Override
-	public Page<Professor> buscarNomeP(String nome, Pageable pageable) {
+	public Page<Professor> buscarNomePaginado(String nome, Pageable pageable) {
 		
 		try {
 			CriteriaBuilder builder = manager.getCriteriaBuilder();

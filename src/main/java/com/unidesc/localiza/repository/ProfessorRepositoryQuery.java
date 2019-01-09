@@ -12,7 +12,7 @@ public interface ProfessorRepositoryQuery {
 	public List<Professor> buscarNome(String nome);
 	
 	
-	public Page<Professor> buscarNomeP(String nome, Pageable pageable);
+	public Page<Professor> buscarNomePaginado(String nome, Pageable pageable);
 
 
 	

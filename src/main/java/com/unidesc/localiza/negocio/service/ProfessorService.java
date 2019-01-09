@@ -22,8 +22,8 @@ public class ProfessorService {
 		return professorRepository.buscarNome(nome);
 	}
 	
-	public Page<Professor> buscarPorNomeP(String nome, Pageable pageable) {
-		return professorRepository.buscarNomeP(nome, pageable);
+	public Page<Professor> buscarPorNomePaginado(String nome, Pageable pageable) {
+		return professorRepository.buscarNomePaginado(nome, pageable);
 	}
 	
 	public List<Professor> buscarTodos(){

@@ -3,10 +3,13 @@ package com.unidesc.localiza.negocio.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.unidesc.localiza.entity.Local;
+import com.unidesc.localiza.entity.Professor;
 import com.unidesc.localiza.exceptions.LocalDuplicadoException;
 import com.unidesc.localiza.repository.LocalRepository;
 
@@ -24,14 +27,18 @@ public class LocalService {
 		return localRepository.findAll();
 	}
 	
+	public Page<Local> buscarLocalPaginado(String bloco, Pageable pageable) {
+		return localRepository.buscarLocalPaginado(bloco, pageable);
+	}
+	
 	public Local salvarLocal(@RequestBody Local local) throws LocalDuplicadoException {
 		
-		Local localEncontrado = localRepository.buscarPorBlocoUnico(local.getBloco());
-		Local localEncontrado2 = localRepository.buscarPorSalaUnico(local.getSala());
+		Local localEncontrado = localRepository.buscarPorLocalUnico(local.getBloco(), local.getSala());
+		
 	
-		if(localEncontrado != null && localEncontrado2 != null) {
+		if(localEncontrado != null ) {
 			throw new LocalDuplicadoException("Local Duplicado! -  " +"ID: " + localEncontrado.getIdLocal() + 
-					" BLOCO: " + localEncontrado.getBloco() + " SALA: " + localEncontrado2.getSala() );
+					" BLOCO: " + localEncontrado.getBloco() + " SALA: " + localEncontrado.getSala() );
 		}
 		
 		return localRepository.save(local);

@@ -11,10 +11,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.unidesc.localiza.entity.Local;
+import com.unidesc.localiza.entity.Professor;
 import com.unidesc.localiza.repository.LocalRepositoryQuery;
 
 @Repository
@@ -51,67 +55,80 @@ public class LocalRepositoryImpl implements LocalRepositoryQuery {
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
-	
-	
-	
 
 	@Override
-	public Local buscarPorBlocoUnico(String bloco) {
-		Local blocoEncontrado= null;
-		
+	public Local buscarPorLocalUnico(String bloco, String sala) {
+		Local localEncontrado = null;
 		try {
-		CriteriaBuilder builder =manager.getCriteriaBuilder();	
-		CriteriaQuery<Local> blocoCq = builder.createQuery(Local.class);
-		Root<Local> blocoRoot = blocoCq.from(Local.class);
-		
-		Predicate[] predicates = criarRestricaoUnico(bloco, builder,blocoRoot);
-		blocoCq.where(predicates);
-		
-		TypedQuery<Local> typedQuery =manager.createQuery(blocoCq);
-		
-		blocoEncontrado = typedQuery.getSingleResult();
-		return blocoEncontrado;
+			CriteriaBuilder builder =manager.getCriteriaBuilder();
+			CriteriaQuery< Local> localCR = builder.createQuery(Local.class);
+			Root<Local> localRoot = localCR.from(Local.class);
+			Predicate[] predicates = criarRestricaoUnica(bloco, sala, builder, localRoot);
+			localCR.where(predicates);
+			
+			TypedQuery<Local> typedQuery = manager.createQuery(localCR);
+			
+			localEncontrado = typedQuery.getSingleResult();
+			
+			
 		} catch (Exception e) {
-			return blocoEncontrado;
+			// TODO: handle exception
 		}
+		return localEncontrado;
 	}
 
-	private Predicate[] criarRestricaoUnico(String bloco, CriteriaBuilder builder, Root<Local> blocoRoot) {
+	private Predicate[] criarRestricaoUnica(String bloco, String sala, CriteriaBuilder builder, Root<Local> localRoot) {
 		List<Predicate> predicates = new ArrayList<>();
-		if(!StringUtils.isEmpty(bloco)) {
-			predicates.add(builder.like(builder.lower(blocoRoot.get("bloco")), "%" + (bloco.toLowerCase()) + "%"));
-		}
+		if((!StringUtils.isEmpty(bloco)) &&(!StringUtils.isEmpty(sala)) ) {
+		predicates.add(builder.equal(localRoot.get("bloco"),bloco));
+		predicates.add(builder.equal(localRoot.get("sala"),sala));
+	}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 
 	@Override
-	public Local buscarPorSalaUnico(String sala) {
-		Local blocoEncontrado= null;
-		
+	public Page<Local> buscarLocalPaginado(String bloco, Pageable pageable) {
 		try {
-		CriteriaBuilder builder =manager.getCriteriaBuilder();	
-		CriteriaQuery<Local> salaCq = builder.createQuery(Local.class);
-		Root<Local> salaRoot = salaCq.from(Local.class);
-		
-		Predicate[] predicates = criarRestricaoUnico2(sala, builder,salaRoot);
-		salaCq.where(predicates);
-		
-		TypedQuery<Local> typedQuery =manager.createQuery(salaCq);
-		
-		blocoEncontrado = typedQuery.getSingleResult();
-		return blocoEncontrado;
+			CriteriaBuilder builder =manager.getCriteriaBuilder();
+			CriteriaQuery< Local> localCR = builder.createQuery(Local.class);
+			Root<Local> localRoot = localCR.from(Local.class);
+			Predicate[] predicates = criarRestricao(bloco, builder, localRoot);
+			localCR.where(predicates);
+			TypedQuery<Local> typedQuery = manager.createQuery(localCR);
+			
+			adicionarRestricaoDePaginacao(typedQuery, pageable);
+			return new PageImpl<>(typedQuery.getResultList(), pageable, total(bloco));
+			
 		} catch (Exception e) {
-			return blocoEncontrado;
+			return null;
 		}
+		
 	}
 
-	private Predicate[] criarRestricaoUnico2(String sala, CriteriaBuilder builder, Root<Local> salaRoot) {
-		List<Predicate> predicates = new ArrayList<>();
-		if(!StringUtils.isEmpty(sala)) {
-			predicates.add(builder.like(builder.lower(salaRoot.get("sala")), "%" + (sala.toLowerCase()) + "%"));
-		}
-		return predicates.toArray(new Predicate[predicates.size()]);
+	private Long total(String bloco) {
+		
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<Long> tabelaLocalCR = builder.createQuery(Long.class);
+		
+		Root<Local> localRoot = tabelaLocalCR.from(Local.class);
+		Predicate[] predicates = criarRestricao(bloco, builder, localRoot);
+		tabelaLocalCR.where(predicates);
+		
+		tabelaLocalCR.select(builder.count(localRoot));
+		
+		
+		return manager.createQuery(tabelaLocalCR).getSingleResult();
 	}
-
+	private void adicionarRestricaoDePaginacao(TypedQuery<Local> typedQuery, Pageable pageable) {
+		
+		int paginaAtual = pageable.getPageNumber();
+		int totalRegistroPorPagina = pageable.getPageSize();
+		int primeiroRegistroPagina = paginaAtual * totalRegistroPorPagina;
+		
+		 typedQuery.setFirstResult(primeiroRegistroPagina);
+		 typedQuery.setMaxResults(totalRegistroPorPagina);
+		
 	}
-
+}
+	
+	
