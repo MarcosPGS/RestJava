@@ -135,7 +135,7 @@ public class DisciplinaRepositoryImpl implements DisciplinaRepositoryQuery {
 	private Predicate[] criarRestricaoUnico(String nome, CriteriaBuilder builder, Root<Disciplina> disciplinaRoot) {
 		List<Predicate> predicates = new ArrayList<>();
 		if(!StringUtils.isEmpty(nome)) {
-			predicates.add(builder.like(builder.lower(disciplinaRoot.get("nome")),"%" +  (nome.toLowerCase())+ "%"));
+			predicates.add(builder.equal(disciplinaRoot.get("nome"), nome));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}

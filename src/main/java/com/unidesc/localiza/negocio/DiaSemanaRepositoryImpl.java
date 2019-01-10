@@ -80,8 +80,7 @@ public class DiaSemanaRepositoryImpl implements DiaSemanaRepositoryQuery {
 List<Predicate> predicates = new ArrayList<>();
 		
 		if(!StringUtils.isEmpty(descricao)) {
-			predicates.add(builder.like(builder.lower(diaSemanaRoot.get("descricao")), "%"+(descricao.toLowerCase())+"%" ));
-			
+			predicates.add(builder.equal(diaSemanaRoot.get("descricao"), descricao));			
 		}
 		
 		return predicates.toArray(new Predicate[predicates.size()]);
