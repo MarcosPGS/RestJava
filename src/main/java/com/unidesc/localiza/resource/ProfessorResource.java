@@ -4,14 +4,14 @@ package com.unidesc.localiza.resource;
 
 import java.util.List;
 
-import javax.xml.ws.Response;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.unidesc.localiza.entity.Professor;
 import com.unidesc.localiza.exceptions.ProfessorDuplicadoException;
 import com.unidesc.localiza.negocio.service.ProfessorService;
-import com.unidesc.localiza.repository.ProfessorRepository;
+
 
 @CrossOrigin//serve para resolver o problema de domínio cruzado
 @RestController

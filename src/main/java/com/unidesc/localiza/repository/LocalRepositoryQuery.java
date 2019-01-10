@@ -10,8 +10,7 @@ import com.unidesc.localiza.entity.Local;
 public interface LocalRepositoryQuery {
 
 	public List<Local> buscaPorBloco(String bloco);
-	
-	public Page<Local> buscarLocalPaginado(String bloco, Pageable pageable);
+
 	
 	public Local buscarPorLocalUnico(String bloco, String sala);
 }

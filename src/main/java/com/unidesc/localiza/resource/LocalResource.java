@@ -35,12 +35,7 @@ public class LocalResource {
 		return localService.buscarTodosLocais();
 	}
 	
-	//endpoint busca por nome Paginada
-			@GetMapping("/professor/nomePaginacao") //Page = ele ja é uma lista;
-			public Page<Local> buscaLocalPaginado(String bloco, Pageable pageable) {
-				
-				return localService.buscarLocalPaginado(bloco, pageable);
-			}
+
 	
 	@GetMapping("/local/bloco/{bloco}")
 	public ResponseEntity<List<Local>> buscaBloco(@PathVariable String bloco){

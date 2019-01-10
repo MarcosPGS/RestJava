@@ -27,9 +27,7 @@ public class LocalService {
 		return localRepository.findAll();
 	}
 	
-	public Page<Local> buscarLocalPaginado(String bloco, Pageable pageable) {
-		return localRepository.buscarLocalPaginado(bloco, pageable);
-	}
+
 	
 	public Local salvarLocal(@RequestBody Local local) throws LocalDuplicadoException {
 		
