@@ -31,6 +31,7 @@ public class ProfessorService {
 	}
 	
 	
+	
 	public Professor salvarProfessor(@RequestBody Professor professor) throws ProfessorDuplicadoException {
 		Professor professorEncontrado = professorRepository.buscarPorMatricula(professor.getMatricula());
 		if(professorEncontrado != null) {
@@ -40,9 +41,13 @@ public class ProfessorService {
 		return professorRepository.save(professor);
 	}
 	
+	
+	
 	public Professor atualizarProfessor(@RequestBody Professor professor) {
 		return professorRepository.save(professor);
 	}
+	
+	
 
 	public void deletarProfessor(@RequestBody Professor professor) {
 	professorRepository.delete(professor);

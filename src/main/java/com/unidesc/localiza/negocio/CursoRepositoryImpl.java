@@ -91,7 +91,8 @@ public class CursoRepositoryImpl implements CursoRepositoryQuery{
 	private Predicate[] criarRestricaoUnico(String nome, CriteriaBuilder builder, Root<Curso> cursoRoot) {
 		List<Predicate> predicates = new ArrayList<>();
 		if (!StringUtils.isEmpty(nome)) {
-			predicates.add(builder.equal(cursoRoot.get("nome"), nome));
+			//predicates.add(builder.equal(cursoRoot.get("nome"), nome));
+			predicates.add(builder.like( builder.lower( cursoRoot.get("nome")),  "%" +(nome.toLowerCase())+ "%"   ));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}

@@ -53,7 +53,7 @@ public class PermissaoRepositoryImpl implements PermissaoRepositoryQuery {
 	private Predicate[] criarRestricaoUnico(String permissao, CriteriaBuilder builder, Root<Permissao> permissaoRoot) {
 		List<Predicate> predicates = new ArrayList<>();
 		if (!StringUtils.isEmpty(permissao)) {
-			predicates.add(builder.equal(permissaoRoot.get("permissao"), permissao));		}
+			predicates.add(builder.like( builder.lower( permissaoRoot.get("permissao")),  "%" +(permissao.toLowerCase())+ "%"   ));		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 

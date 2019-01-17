@@ -46,7 +46,8 @@ public class TurnoRepositoryImpl implements TurnoRepositoryQuery {
 		List<Predicate> predicates = new ArrayList<>();
 		
 		if(!StringUtils.isEmpty(descricao)) {
-			predicates.add(builder.equal(turnoRoot.get("descricao"), descricao));		}
+			predicates.add(builder.like( builder.lower( turnoRoot.get("descricao")),  "%" +(descricao.toLowerCase())+ "%"   ));	
+		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 

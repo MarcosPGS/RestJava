@@ -49,7 +49,9 @@ public class SemestreRepositoryImpl implements SemestreRepositoryQuery {
 	private Predicate[] criarRestricao(String semestre, CriteriaBuilder builder, Root<Semestre> semestreRooT) {
 		List<Predicate> predicates = new ArrayList<>();
 		if(!StringUtils.isEmpty(semestre)) {
-			predicates.add(builder.equal(semestreRooT.get("semestre"),semestre));
+			//predicates.add(builder.equal(semestreRooT.get("semestre"),semestre));
+			predicates.add(builder.like( builder.lower( semestreRooT.get("semestre")),  "%" +(semestre.toLowerCase())+ "%"   ));	
+
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 		
