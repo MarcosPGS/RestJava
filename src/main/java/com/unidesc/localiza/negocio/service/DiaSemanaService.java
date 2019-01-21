@@ -24,7 +24,7 @@ public class DiaSemanaService {
 		return diaSemanaRepository.findAll();
 	}
 	
-	public DiaSemana salvarDiaSemana(@RequestBody DiaSemana diaSemana) throws DiaSemanaDuplicadoException {
+	public DiaSemana salvarDiaSemana(DiaSemana diaSemana) throws DiaSemanaDuplicadoException {
 		DiaSemana diaSemanaEncontrado = diaSemanaRepository.buscarPorDiaSemanaUnico(diaSemana.getDescricao());
 		if(diaSemanaEncontrado != null) {
 			throw new DiaSemanaDuplicadoException("Dia Da Semana Duplicado! - " + "ID: "+ diaSemanaEncontrado.getIdDiaSemana());
@@ -33,10 +33,10 @@ public class DiaSemanaService {
 		return diaSemanaRepository.save(diaSemana);
 	}
 	
-	public DiaSemana atualizarDiaSemana(@RequestBody DiaSemana diaSemana) {
+	public DiaSemana atualizarDiaSemana(DiaSemana diaSemana) {
 		return diaSemanaRepository.save(diaSemana);
 	}
-	public void deletarDiaSemana(@RequestBody DiaSemana diaSemana) {
-		diaSemanaRepository.delete(diaSemana);
+	public void deletarDiaSemana(Long idDiaSemana) {
+		diaSemanaRepository.deleteById(idDiaSemana);
 	}
 }

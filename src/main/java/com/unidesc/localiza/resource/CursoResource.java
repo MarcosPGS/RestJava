@@ -67,9 +67,9 @@ public class CursoResource {
 	}
 	
 	//endpoint deletar curso
-	@DeleteMapping("/curso")
-	public void deletaCurso(@RequestBody Curso curso) {
-		cursoService.deletarCurso(curso);
+	@DeleteMapping("/curso/{idCurso}")
+	public void deletaCurso(@PathVariable Long idCurso) {
+		cursoService.deletarCurso(idCurso);
 	}
 	
 }

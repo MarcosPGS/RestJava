@@ -24,7 +24,7 @@ public class CursoService {
 		return cursoRepository.findAll();
 	}
 	
-	public Curso salvarCurso(@RequestBody Curso curso) throws CursoDuplicadoException {
+	public Curso salvarCurso( Curso curso) throws CursoDuplicadoException {
 		Curso cursoEncotrado = cursoRepository.buscarPorNomeUnico(curso.getNome());
 		if(cursoEncotrado != null) {
 			throw new CursoDuplicadoException("Curso Duplicado!" + " ID: " + cursoEncotrado.getIdCurso());
@@ -33,12 +33,12 @@ public class CursoService {
 	}
 	
 	
-	public Curso atualizarCurso(@RequestBody Curso curso) {
+	public Curso atualizarCurso( Curso curso) {
 		return cursoRepository.save(curso);
 	}
 	
-	public void deletarCurso(@RequestBody Curso curso) {
-		cursoRepository.delete(curso);
+	public void deletarCurso( Long idCurso) {
+		cursoRepository.deleteById(idCurso);
 	}
 	
 	

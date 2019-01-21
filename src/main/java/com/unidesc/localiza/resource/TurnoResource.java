@@ -54,8 +54,8 @@ public class TurnoResource {
 		return turnoService.atualizarTurno(turno);
 	}
 	
-	@DeleteMapping("/turno")
-	public void deletaTurno(@RequestBody Turno turno) {
-		turnoService.deletarTurno(turno);
+	@DeleteMapping("/turno/{idTurno}")
+	public void deletaTurno(@PathVariable Long idTurno) {
+		turnoService.deletarTurno(idTurno);
 	}
 }

@@ -60,9 +60,9 @@ public class LocalResource {
 		return localService.atualizarLocal(local);
 	}
 	
-	@DeleteMapping("/local")
-	public void deletaLocal(@RequestBody Local local) {
-		localService.deletarLocal(local);
+	@DeleteMapping("/local/{idLocal}")
+	public void deletaLocal(@PathVariable Long idLocal) {
+		localService.deletarLocal(idLocal);
 	}
 
 }

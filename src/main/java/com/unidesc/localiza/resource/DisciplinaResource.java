@@ -72,9 +72,9 @@ public class DisciplinaResource {
 	}
 	
 	//endpoint Deletar disiciplina
-	@DeleteMapping("/disciplina")
-	public void deletaDisciplina(@RequestBody Disciplina disciplina ) {
-		disciplinaService.deletarDisciplina(disciplina);
+	@DeleteMapping("/disciplina/{idDisciplina}")
+	public void deletaDisciplina(@PathVariable Long idDisciplina) {
+		disciplinaService.deletarDisciplina(idDisciplina);
 	}
 	
 }

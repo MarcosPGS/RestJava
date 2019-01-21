@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,9 +40,9 @@ public class OauthClientDetailsResource {
 		return oauthClientDetailsService.atualizarOauthClientDetails(oauthClientDetails);
 	}
 	
-	@DeleteMapping("/oauth")
-	public void deletaOauth(@RequestBody OauthClientDetails oauthClientDetails) {
-		oauthClientDetailsService.deletarOauthClientDetails(oauthClientDetails);
+	@DeleteMapping("/oauth/{clientId}")
+	public void deletaOauth(@PathVariable String clientId) {
+		oauthClientDetailsService.deletarOauthClientDetails(clientId);
 	}
 	
 }

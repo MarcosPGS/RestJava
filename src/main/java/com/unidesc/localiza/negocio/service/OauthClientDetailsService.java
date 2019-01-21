@@ -20,15 +20,15 @@ public class OauthClientDetailsService {
 		return oauthClientDetailsRepository.findAll();
 	}
 	
-	public OauthClientDetails salvarOauthClientDetails(@RequestBody OauthClientDetails oauthClientDetails) {
+	public OauthClientDetails salvarOauthClientDetails( OauthClientDetails oauthClientDetails) {
 		return oauthClientDetailsRepository.save(oauthClientDetails);
 	}
 	
-	public OauthClientDetails atualizarOauthClientDetails(@RequestBody OauthClientDetails oauthClientDetails) {
+	public OauthClientDetails atualizarOauthClientDetails( OauthClientDetails oauthClientDetails) {
 		return oauthClientDetailsRepository.save(oauthClientDetails);
 	}
 	
-	public void deletarOauthClientDetails(@RequestBody OauthClientDetails oauthClientDetails) {
-		 oauthClientDetailsRepository.delete(oauthClientDetails);
+	public void deletarOauthClientDetails( String clientId) {
+		 oauthClientDetailsRepository.deleteById(clientId);
 	}
 }

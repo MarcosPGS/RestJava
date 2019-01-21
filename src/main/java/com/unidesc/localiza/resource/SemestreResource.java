@@ -56,9 +56,9 @@ public class SemestreResource {
 		return semestreService.atualizarSemestre(semestre);
 	}
 	
-	@DeleteMapping("/semestre")
-	public void deletaSemestre(@RequestBody Semestre semestre) {
-		semestreService.deletarSemestre(semestre);
+	@DeleteMapping("/semestre/{idSemestre}")
+	public void deletaSemestre(@PathVariable Long idSemestre) {
+		semestreService.deletarSemestre(idSemestre);
 	}
 
 }

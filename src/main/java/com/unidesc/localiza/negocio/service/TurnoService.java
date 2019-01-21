@@ -25,7 +25,7 @@ public class TurnoService {
 		return turnoRepository.findAll();
 	}
 	
-	public Turno salvarTurno(@RequestBody Turno turno) throws TurnoDuplicadoException {
+	public Turno salvarTurno(Turno turno) throws TurnoDuplicadoException {
 		Turno turnoEncontrado = turnoRepository.buscarPorTurno(turno.getDescricao());
 		if(turnoEncontrado != null) {
 			throw new TurnoDuplicadoException("Turno Duplicado - " + "ID: " + turnoEncontrado.getIdTurno());
@@ -34,12 +34,12 @@ public class TurnoService {
 		return turnoRepository.save(turno);
 	}
 	
-	public Turno atualizarTurno(@RequestBody Turno turno) {
+	public Turno atualizarTurno(Turno turno) {
 		return turnoRepository.save(turno);
 	}
 	
-	public void deletarTurno(@RequestBody Turno turno) {
-		turnoRepository.delete(turno);
+	public void deletarTurno( Long idTurno) {
+		turnoRepository.deleteById(idTurno);
 	}
 
 }

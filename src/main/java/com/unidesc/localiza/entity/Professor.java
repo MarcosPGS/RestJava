@@ -27,8 +27,11 @@ public class Professor implements Serializable {
 	
 	@Column(name="idprofessor")
 	private	Long idProfessor;
+	
 	@Column(name="nome")
 	private String nome;
+	
+	
 	@Column(name="matricula")
 	private String matricula;
 	
@@ -78,6 +81,8 @@ public class Professor implements Serializable {
 		this.disciplinas = disciplinas;
 	}
 
+
+	
 
 	
 	

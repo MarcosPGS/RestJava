@@ -56,9 +56,9 @@ public class DiaSemanaResource {
 		return diaSemanaService.atualizarDiaSemana(diaSemana);
 	}
 	
-	@DeleteMapping("/diasemana")
-	public void deletaDiaSemana(@RequestBody DiaSemana diaSemana) {
-		diaSemanaService.deletarDiaSemana(diaSemana);
+	@DeleteMapping("/diasemana/{idDiaSemana}")
+	public void deletaDiaSemana(@PathVariable Long idDiaSemana) {
+		diaSemanaService.deletarDiaSemana(idDiaSemana);
 	}
 
 }

@@ -24,19 +24,19 @@ public class SemestreService {
 		return semestreRepository.findAll();
 	}
 	
-	public Semestre salvarSemestre(@RequestBody Semestre semestre) throws SemestreDuplicadoException {
+	public Semestre salvarSemestre(Semestre semestre) throws SemestreDuplicadoException {
 		Semestre semestreEncontrado = semestreRepository.buscarPorSemestre(semestre.getSemestre());
 		if(semestreEncontrado != null) {
 			throw new SemestreDuplicadoException("Semestre Duplicado! - " + "ID: " + semestreEncontrado.getIdSemestre());
 		}
 		return semestreRepository.save(semestre);
 	}
-	public Semestre atualizarSemestre(@RequestBody Semestre semestre) {
+	public Semestre atualizarSemestre(Semestre semestre) {
 		return semestreRepository.save(semestre);
 	}
 
-	public void deletarSemestre(@RequestBody Semestre semestre) {
-		semestreRepository.delete(semestre);
+	public void deletarSemestre( Long idSemestre) {
+		semestreRepository.deleteById(idSemestre);
 	}
 
 

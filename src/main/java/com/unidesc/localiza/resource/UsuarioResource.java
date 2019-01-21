@@ -3,6 +3,8 @@ package com.unidesc.localiza.resource;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unidesc.localiza.entity.Usuario;
+import com.unidesc.localiza.exceptions.UsuarioDuplicadoException;
 import com.unidesc.localiza.negocio.service.UsuarioService;
 import com.unidesc.localiza.repository.UsuarioRepository;
 
@@ -36,8 +39,12 @@ public class UsuarioResource {
 	}
 	
 	@PostMapping("/usuario")
-	public Usuario salvaUsuario(@RequestBody Usuario usuario) {
-		return usuarioService.salvarUsuario(usuario);
+	public ResponseEntity<Object> salvaUsuario(@RequestBody Usuario usuario) {
+		try {
+			return ResponseEntity.ok().body(usuarioService.salvarUsuario(usuario));
+		} catch (UsuarioDuplicadoException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
 	}
 
 	@PutMapping("/usuario")
@@ -45,9 +52,9 @@ public class UsuarioResource {
 		return usuarioService.atualizarUsuario(usuario);
 	}
 	
-	@DeleteMapping("/usuario")
-	public void deletaUsuario(@RequestBody Usuario usuario) {
-		usuarioService.deletarUsuario(usuario);
+	@DeleteMapping("/usuario/{idUsuario}")
+	public void deletaUsuario(@PathVariable Long idUsuario) {
+		usuarioService.deletarUsuario(idUsuario);
 	}
 
 }

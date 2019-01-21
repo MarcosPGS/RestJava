@@ -29,7 +29,7 @@ public class DisciplinaService {
 		return disciplinaRepository.findAll();
 	}
 	
-	public	Disciplina salvarDisciplina(@RequestBody Disciplina disciplina) throws DisciplinaDuplicadaExcepton {
+	public	Disciplina salvarDisciplina( Disciplina disciplina) throws DisciplinaDuplicadaExcepton {
 		Disciplina disciplinaEncontrada = disciplinaRepository.buscarPorNomeDisciplinaUnico(disciplina.getNome());
 		if(disciplinaEncontrada != null) {
 			throw new DisciplinaDuplicadaExcepton("Disciplina Duplicada! - " + "ID: "+ disciplinaEncontrada.getIdDisciplina());
@@ -38,11 +38,11 @@ public class DisciplinaService {
 	}
 	
 	
-	public Disciplina atualizarDisciplina(@RequestBody Disciplina disciplina) {
+	public Disciplina atualizarDisciplina(Disciplina disciplina) {
 		return disciplinaRepository.save(disciplina);
 	}
 
-	public void deletarDisciplina(@RequestBody Disciplina disciplina) {
-		disciplinaRepository.delete(disciplina);
+	public void deletarDisciplina(Long idDisciplina) {
+		disciplinaRepository.deleteById(idDisciplina);
 	}
 }

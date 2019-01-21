@@ -32,7 +32,7 @@ public class ProfessorService {
 	
 	
 	
-	public Professor salvarProfessor(@RequestBody Professor professor) throws ProfessorDuplicadoException {
+	public Professor salvarProfessor(Professor professor) throws ProfessorDuplicadoException {
 		Professor professorEncontrado = professorRepository.buscarPorMatricula(professor.getMatricula());
 		if(professorEncontrado != null) {
 			throw new ProfessorDuplicadoException("Professor Duplicado!" + " ID: " +professorEncontrado.getIdProfessor() +
@@ -43,14 +43,14 @@ public class ProfessorService {
 	
 	
 	
-	public Professor atualizarProfessor(@RequestBody Professor professor) {
+	public Professor atualizarProfessor( Professor professor) {
 		return professorRepository.save(professor);
 	}
 	
 	
 
-	public void deletarProfessor(@RequestBody Professor professor) {
-	professorRepository.delete(professor);
+	public void deletarProfessor(Long idProfessor) {
+	professorRepository.deleteById(idProfessor);
 	}
 	
 	

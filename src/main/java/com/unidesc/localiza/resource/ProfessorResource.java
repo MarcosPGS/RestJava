@@ -79,9 +79,9 @@ public class ProfessorResource {
 	}
 	
 	//endpoint deletar professor
-	@DeleteMapping("/professor")
-	public void deletarProfessor(@RequestBody Professor professor) {
-		professorService.deletarProfessor(professor);
+	@DeleteMapping("/professor/{idProfessor}")
+	public void deletarProfessor(@PathVariable Long idProfessor) {
+		professorService.deletarProfessor(idProfessor);
 	}
 	
 	

@@ -29,7 +29,7 @@ public class LocalService {
 	
 
 	
-	public Local salvarLocal(@RequestBody Local local) throws LocalDuplicadoException {
+	public Local salvarLocal( Local local) throws LocalDuplicadoException {
 		
 		Local localEncontrado = localRepository.buscarPorLocalUnico(local.getBloco(), local.getSala());
 		
@@ -42,12 +42,12 @@ public class LocalService {
 		return localRepository.save(local);
 	}
 	
-	public Local atualizarLocal(@RequestBody Local local) {
+	public Local atualizarLocal( Local local) {
 		return localRepository.save(local);
 	}
 	
-	public void deletarLocal(@RequestBody Local local) {
-		localRepository.delete(local);
+	public void deletarLocal( Long idLocal) {
+		localRepository.deleteById(idLocal);
 	}
 		
 }
