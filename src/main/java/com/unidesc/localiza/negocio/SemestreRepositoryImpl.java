@@ -31,8 +31,8 @@ public class SemestreRepositoryImpl implements SemestreRepositoryQuery {
 		try {
 			CriteriaBuilder builder = manager.getCriteriaBuilder();
 			CriteriaQuery<Semestre> semestreCq = builder.createQuery(Semestre.class);
-			Root<Semestre> semestreRooT = semestreCq.from(Semestre.class);
-			Predicate[] predicates =criarRestricao(semestre, builder, semestreRooT);
+			Root<Semestre> semestreRoot = semestreCq.from(Semestre.class);
+			Predicate[] predicates =criarRestricao(semestre, builder, semestreRoot);
 			semestreCq.where(predicates);
 			TypedQuery<Semestre> typedQuery = manager.createQuery(semestreCq);
 			
@@ -46,11 +46,11 @@ public class SemestreRepositoryImpl implements SemestreRepositoryQuery {
 		}
 	}
 
-	private Predicate[] criarRestricao(String semestre, CriteriaBuilder builder, Root<Semestre> semestreRooT) {
+	private Predicate[] criarRestricao(String semestre, CriteriaBuilder builder, Root<Semestre> semestreRoot) {
 		List<Predicate> predicates = new ArrayList<>();
 		if(!StringUtils.isEmpty(semestre)) {
 			//predicates.add(builder.equal(semestreRooT.get("semestre"),semestre));
-			predicates.add(builder.like( builder.lower( semestreRooT.get("semestre")),  "%" +(semestre.toLowerCase())+ "%"   ));	
+			predicates.add(builder.equal(semestreRoot.get("semestre"), semestre));
 
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);

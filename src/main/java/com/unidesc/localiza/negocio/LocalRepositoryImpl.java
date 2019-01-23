@@ -81,7 +81,7 @@ public class LocalRepositoryImpl implements LocalRepositoryQuery {
 		List<Predicate> predicates = new ArrayList<>();
 		if((!StringUtils.isEmpty(bloco)) &&(!StringUtils.isEmpty(sala)) ) {
 			predicates.add(builder.like( builder.lower( localRoot.get("bloco")),  "%" +(bloco.toLowerCase())+ "%"   ));
-		predicates.add(builder.equal(localRoot.get("sala"),sala));
+			predicates.add(builder.equal(localRoot.get("sala"),sala));
 	}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
