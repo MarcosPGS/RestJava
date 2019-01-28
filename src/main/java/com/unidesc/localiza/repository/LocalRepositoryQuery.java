@@ -13,4 +13,6 @@ public interface LocalRepositoryQuery {
 
 	
 	public Local buscarPorLocalUnico(String bloco, String sala);
+	
+	public Page<Local> buscarLocalPaginado(String bloco, Pageable pageable);
 }

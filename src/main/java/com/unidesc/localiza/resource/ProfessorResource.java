@@ -55,7 +55,7 @@ public class ProfessorResource {
 	}	
 	
 	//endpoint busca por nome Paginada
-		@GetMapping("/professor/nomePaginacao") //Page = ele ja é uma lista;
+		@GetMapping("/professor/nomepaginacao") //Page = ele ja é uma lista;
 		public Page<Professor> buscaNomeP(String nome, Pageable pageable) {
 			
 			return professorService.buscarPorNomePaginado(nome, pageable);

@@ -35,6 +35,11 @@ public class LocalResource {
 		return localService.buscarTodosLocais();
 	}
 	
+	@GetMapping("/local/localpaginado")
+	public Page<Local> buscarLocalPaginado(@RequestBody String bloco, Pageable pageable){
+		return localService.buscarLocalPaginado(bloco, pageable);
+	}
+	
 
 	
 	@GetMapping("/local/bloco/{bloco}")

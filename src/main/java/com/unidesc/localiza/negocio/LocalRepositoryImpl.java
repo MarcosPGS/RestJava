@@ -85,4 +85,49 @@ public class LocalRepositoryImpl implements LocalRepositoryQuery {
 	}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
+
+	@Override
+	public Page<Local> buscarLocalPaginado(String bloco, Pageable pageable) {
+		try {
+			CriteriaBuilder builder =manager.getCriteriaBuilder();
+			CriteriaQuery< Local> localCR = builder.createQuery(Local.class);
+			Root<Local> localRoot = localCR.from(Local.class);
+			Predicate[] predicates = criarRestricao(bloco, builder,localRoot);
+			localCR.where(predicates);
+			
+			TypedQuery<Local> typedQuery = manager.createQuery(localCR);
+			
+			adicionarRestricaoDePaginacao(typedQuery, pageable);
+			
+			return new PageImpl<>(typedQuery.getResultList(), pageable, total(bloco));
+			
+			
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	private Long total(String bloco) {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<Long> tabelaLocalCR = builder.createQuery(Long.class);
+		
+		Root<Local> localRoot = tabelaLocalCR.from(Local.class);
+		Predicate[] predicates = criarRestricao(bloco, builder, localRoot);
+		tabelaLocalCR.where(predicates);
+		
+		tabelaLocalCR.select(builder.count(localRoot));
+		
+		
+		return manager.createQuery(tabelaLocalCR).getSingleResult();
+	}
+
+	private void adicionarRestricaoDePaginacao(TypedQuery<Local> typedQuery, Pageable pageable) {
+		int paginaAtual = pageable.getPageNumber();
+		int totalRegistroPorPagina = pageable.getPageSize();
+		int primeiroRegistroPagina = paginaAtual * totalRegistroPorPagina;
+		
+		 typedQuery.setFirstResult(primeiroRegistroPagina);
+		 typedQuery.setMaxResults(totalRegistroPorPagina);
+		
+	}
 }

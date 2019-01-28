@@ -49,7 +49,7 @@ public class DisciplinaResource {
 		}
 		
 		//endpoint busca por nome Paginada
-		@GetMapping("/disciplina/nomePaginacao") //Page = ele ja é uma lista;
+		@GetMapping("/disciplina/nomepaginacao") //Page = ele ja é uma lista;
 		public Page<Disciplina> buscaNomePagina(String nome,Pageable pageable){
 			return disciplinaService.buscarPorNomePaginaDisciplina(nome, pageable);
 		}

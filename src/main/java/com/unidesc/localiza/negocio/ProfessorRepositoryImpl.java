@@ -116,6 +116,10 @@ public class ProfessorRepositoryImpl implements ProfessorRepositoryQuery {
 		 typedQuery.setMaxResults(totalRegistroPorPagina);
 		
 	}
+	
+	
+	
+	
 	@Override
 	public Professor buscarPorMatricula(String matricula) {
 		
