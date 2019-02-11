@@ -33,11 +33,19 @@ public class ProfessorService {
 	
 	
 	public Professor salvarProfessor(Professor professor) throws ProfessorDuplicadoException {
-		Professor professorEncontrado = professorRepository.buscarPorMatricula(professor.getMatricula());
-		if(professorEncontrado != null) {
-			throw new ProfessorDuplicadoException("Professor Duplicado!" + " ID: " +professorEncontrado.getIdProfessor() +
-					" Matricula: " + professorEncontrado.getMatricula());
+
+		if(professor != null && professor.getMatricula() != null) {
+			
+			Professor professorEncontrado = professorRepository.buscarPorMatricula(professor.getMatricula());
+			
+			if(professorEncontrado != null) {
+				throw new ProfessorDuplicadoException("Professor Duplicado!" + " ID: " +professorEncontrado.getIdProfessor() +
+						" Matricula: " + professorEncontrado.getMatricula() + "Nome: " + professorEncontrado.getNome());
+			}
+			
 		}
+		
+		
 		return professorRepository.save(professor);
 	}
 	
