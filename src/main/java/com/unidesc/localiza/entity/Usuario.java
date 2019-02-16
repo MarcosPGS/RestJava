@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -27,12 +29,15 @@ public class Usuario implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="idusuario")
-	private Long idUsuario;
+	@Column(name="idprofessor")
+	private Long idProfessor;
 	@Column(name="login")
 	private String login;
 	@Column(name="senha")
 	private String senha;
+	
+	
+	
 
 	//lAZY = PERMITE NAO PESAR MEU SISTEMA
 	//EAGER = OBRIGA CARREGAR A ENTIDADE RELACIONADA;
@@ -45,13 +50,13 @@ public class Usuario implements Serializable {
 	private List<Permissao> permissaos;
 
 
-	public Long getIdUsuario() {
-		return idUsuario;
+	public Long getIdProfessor() {
+		return idProfessor;
 	}
 
 
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setIdProfessor(Long idProfessor) {
+		this.idProfessor = idProfessor;
 	}
 
 
@@ -83,8 +88,8 @@ public class Usuario implements Serializable {
 	public void setPermissaos(List<Permissao> permissaos) {
 		this.permissaos = permissaos;
 	}
-	
-	
+
+
 	
 	
 }

@@ -28,7 +28,7 @@ public class UsuarioService {
 	public Usuario salvarUsuario( Usuario usuario) throws UsuarioDuplicadoException {
 		Usuario usuarioEncontrado = usuarioRepository.buscarLogin(usuario.getLogin());
 		if(usuarioEncontrado != null) {
-			throw new UsuarioDuplicadoException("Usuario Duplicado!  ID: " + usuarioEncontrado.getIdUsuario());
+			throw new UsuarioDuplicadoException("Usuario Duplicado!  ID: " + usuarioEncontrado.getIdProfessor());
 		}
 		return usuarioRepository.save(usuario);
 	}
