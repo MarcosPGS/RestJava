@@ -21,18 +21,18 @@ import com.unidesc.localiza.negocio.service.PermissaoService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/permissao")
 public class PermissaoResource {
 
 	@Autowired
 	PermissaoService permissaoService;
 	
-	@GetMapping("/permissao")
+	@GetMapping()
 	public List<Permissao> buscarTodos(){
 		return permissaoService.buscarTodasPermissao();
 	}
 	
-	@PostMapping("/permissao")
+	@PostMapping()
 	public ResponseEntity<Object> criarPermissao(@RequestBody Permissao permissao) {
 		try {
 			return ResponseEntity.ok().body( permissaoService.salvarPermissao(permissao));
@@ -40,12 +40,12 @@ public class PermissaoResource {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 		}
 	}
-	@PutMapping("/permissao")
+	@PutMapping()
 	public Permissao atualizarPermissao(@RequestBody Permissao permissao) {
 		return permissaoService.atualizarPermissao(permissao);
 	}
 	 
-	@DeleteMapping("/permissao/{idPermissao}")
+	@DeleteMapping("/{idPermissao}")
 	public void deletarPermissao(@PathVariable Long idPermissao) {
 		permissaoService.deletarPermissao(idPermissao);
 	}

@@ -20,7 +20,7 @@ import com.unidesc.localiza.negocio.service.SemestreService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/semestre")
 public class SemestreResource {
 	
 	@Autowired
@@ -28,12 +28,12 @@ public class SemestreResource {
 	
 	
 	
-	@GetMapping("/semestre")
+	@GetMapping()
 	public List<Semestre> buscaSemesttre(){
 		return semestreService.buscarTodosSemestres();
 	}
 	
-	@GetMapping("/semestre/semestre/{semestre}")
+	@GetMapping("/{semestre}")
 	public ResponseEntity<Semestre> buscaSemestre(@PathVariable String semestre){
 		Semestre semestreEncontrado = semestreService.buscarPorSemestre(semestre);
 		if(semestreEncontrado == null) {
@@ -42,7 +42,7 @@ public class SemestreResource {
 		return ResponseEntity.ok().body(semestreEncontrado);
 	}
 	
-	@PostMapping("/semestre")
+	@PostMapping()
 	public ResponseEntity<Object> salvaSemestre(@RequestBody Semestre semestre) {
 		try {
 			return ResponseEntity.ok().body(semestreService.salvarSemestre(semestre));
@@ -51,12 +51,12 @@ public class SemestreResource {
 		}
 	}
 	
-	@PutMapping("/semestre")
+	@PutMapping()
 	public Semestre atualizaSemestre(@RequestBody Semestre semestre) {
 		return semestreService.atualizarSemestre(semestre);
 	}
 	
-	@DeleteMapping("/semestre/{idSemestre}")
+	@DeleteMapping("/{idSemestre}")
 	public void deletaSemestre(@PathVariable Long idSemestre) {
 		semestreService.deletarSemestre(idSemestre);
 	}

@@ -21,14 +21,14 @@ import com.unidesc.localiza.negocio.service.DiaSemanaService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/diasemana")
 public class DiaSemanaResource {
 	
 	@Autowired
 	DiaSemanaService diaSemanaService;
 	
 	
-	@GetMapping("/diasemana/descricao/{descricao}")
+	@GetMapping("/{descricao}")
 	public ResponseEntity<List<DiaSemana>> buscaPorDiaSemana(@PathVariable String descricao){
 		List<DiaSemana> diaSemanaEncontrado = diaSemanaService.buscarPorDiaSemana(descricao);
 		if(diaSemanaEncontrado == null) {
@@ -37,12 +37,12 @@ public class DiaSemanaResource {
 		return ResponseEntity.ok().body(diaSemanaEncontrado);
 	}
 	
-	@GetMapping("/diasemana")
+	@GetMapping()
 	public List<DiaSemana> buscaTodos(){
 		return diaSemanaService.buscarTodosDias();
 	}
 	
-	@PostMapping("/diasemana")
+	@PostMapping()
 	public ResponseEntity<Object> salvaDiaSemana(@RequestBody DiaSemana diaSemana) {
 		try {
 			return ResponseEntity.ok().body(diaSemanaService.salvarDiaSemana(diaSemana));
@@ -51,7 +51,7 @@ public class DiaSemanaResource {
 		}
 	}
 	
-	@PutMapping("/diasemana")
+	@PutMapping()
 	public DiaSemana atualizaDiaSemana(@RequestBody DiaSemana diaSemana) {
 		return diaSemanaService.atualizarDiaSemana(diaSemana);
 	}

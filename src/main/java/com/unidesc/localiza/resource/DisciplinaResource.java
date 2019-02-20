@@ -25,7 +25,7 @@ import com.unidesc.localiza.negocio.service.DisciplinaService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/disciplina")
 public class DisciplinaResource {
 
 	
@@ -33,13 +33,13 @@ public class DisciplinaResource {
 	DisciplinaService disciplinaService;
 	
 	//endpoint buscar todas as disciplinas
-	@GetMapping("/disciplina")
+	@GetMapping()
 	public List<Disciplina> buscaTodasDisciplinas(){ 
 		return disciplinaService.buscarTodasDisciplina();
 	}
 	
 	//endpoint buscar as disciplina por nome
-		@GetMapping("/disciplina/nome/{nome}")
+		@GetMapping("/{nome}")
 		public ResponseEntity<List<Disciplina>> buscaNomeDisciplina(@PathVariable String nome){
 			List<Disciplina> disciplinaEncontrada = disciplinaService.buscarPorNome(nome);
 			if(disciplinaEncontrada == null) {
@@ -49,14 +49,14 @@ public class DisciplinaResource {
 		}
 		
 		//endpoint busca por nome Paginada
-		@GetMapping("/disciplina/nomepaginacao") //Page = ele ja é uma lista;
+		@GetMapping("/nomepaginacao") //Page = ele ja é uma lista;
 		public Page<Disciplina> buscaNomePagina(String nome,Pageable pageable){
 			return disciplinaService.buscarPorNomePaginaDisciplina(nome, pageable);
 		}
 		
 	
 	//endpoint criar disciplina
-	@PostMapping("/disciplina")
+	@PostMapping()
 	public ResponseEntity<Object> salvaDisciplina(@RequestBody Disciplina disciplina) {
 		try {
 			return ResponseEntity.ok().body(disciplinaService.salvarDisciplina(disciplina));
@@ -66,13 +66,13 @@ public class DisciplinaResource {
 	}
 	
 	//endpoint atualizar disciplina
-	@PutMapping("disciplina")
+	@PutMapping()
 	public Disciplina atualizarDisciplina(@RequestBody Disciplina disciplina) {
 		return disciplinaService.atualizarDisciplina(disciplina);
 	}
 	
 	//endpoint Deletar disiciplina
-	@DeleteMapping("/disciplina/{idDisciplina}")
+	@DeleteMapping("/{idDisciplina}")
 	public void deletaDisciplina(@PathVariable Long idDisciplina) {
 		disciplinaService.deletarDisciplina(idDisciplina);
 	}

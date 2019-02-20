@@ -25,7 +25,7 @@ import com.unidesc.localiza.negocio.service.CursoService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/curso")
 public class CursoResource {
 
 	@Autowired
@@ -34,13 +34,13 @@ public class CursoResource {
 	
 	 
 	//endpoint buscar todos os cursos
-	@GetMapping("/curso")
+	@GetMapping("")
 	public List<Curso> buscaTodosCursos(){ 
 		return cursoService.buscarTodosCurso();
 	}	
 	
 	//endpoint buscar os cursos por nome
-		@GetMapping("/curso/nome/{nome}")
+		@GetMapping("/{nome}")
 		public ResponseEntity<List<Curso>> buscaNomeCurso(@PathVariable String nome){
 			List<Curso> cursoEncotrado = cursoService.buscarPorNome(nome);
 			if(cursoEncotrado == null) {
@@ -51,7 +51,7 @@ public class CursoResource {
 	
 	
 	//endpoint criar o curso
-	@PostMapping("/curso")
+	@PostMapping()
 	public ResponseEntity<Object> salvaCurso(@RequestBody Curso curso) {
 		try {
 			return ResponseEntity.ok().body(cursoService.salvarCurso(curso));
@@ -61,7 +61,7 @@ public class CursoResource {
 	}
 	
 	//endpoint atualizar curso
-	@PutMapping("/curso")
+	@PutMapping()
 	public Curso atualizaCurso(@RequestBody Curso curso) {
 		return cursoService.atualizarCurso(curso);
 	}

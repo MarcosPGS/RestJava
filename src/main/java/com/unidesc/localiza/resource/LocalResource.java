@@ -24,25 +24,25 @@ import com.unidesc.localiza.negocio.service.LocalService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/local")
 public class LocalResource {
 	
 	@Autowired
 	LocalService localService;
 	
-	@GetMapping("/local")
+	@GetMapping()
 	public List<Local> buscaLocal(){
 		return localService.buscarTodosLocais();
 	}
 	
-	@GetMapping("/local/localpaginado")
+	@GetMapping("/localpaginado")
 	public Page<Local> buscarLocalPaginado(@RequestBody String bloco, Pageable pageable){
 		return localService.buscarLocalPaginado(bloco, pageable);
 	}
 	
 
 	
-	@GetMapping("/local/bloco/{bloco}")
+	@GetMapping("/{bloco}")
 	public ResponseEntity<List<Local>> buscaBloco(@PathVariable String bloco){
 		List<Local> blocoEncontrado = localService.buscarPorBloco(bloco);
 		if(blocoEncontrado == null) {
@@ -51,7 +51,7 @@ public class LocalResource {
 		return ResponseEntity.ok(blocoEncontrado);
 	}
 	
-	@PostMapping("/local")
+	@PostMapping()
 	public ResponseEntity<Object> salvaLocal(@RequestBody Local local) {
 		try {
 			return ResponseEntity.ok().body(localService.salvarLocal(local));
@@ -60,12 +60,12 @@ public class LocalResource {
 		}
 	}
 	
-	@PutMapping("/local")
+	@PutMapping()
 	public Local atualizaLocal(@RequestBody Local local) {
 		return localService.atualizarLocal(local);
 	}
 	
-	@DeleteMapping("/local/{idLocal}")
+	@DeleteMapping("/{idLocal}")
 	public void deletaLocal(@PathVariable Long idLocal) {
 		localService.deletarLocal(idLocal);
 	}

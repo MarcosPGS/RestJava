@@ -22,23 +22,23 @@ import com.unidesc.localiza.repository.UsuarioRepository;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/usuario")
 public class UsuarioResource {
 	
 	@Autowired
 	UsuarioService usuarioService;
 	
-	@GetMapping("/usuario/login/{login}")
+	@GetMapping("/{login}")
 	public Usuario buscaLogin(@PathVariable String login) {
 		return usuarioService.buscarLogin(login);
 	}
 	
-	@GetMapping("/usuario")
+	@GetMapping()
 	public List<Usuario> buscatodos(){
 		return usuarioService.buscartodosUsuario();
 	}
 	
-	@PostMapping("/usuario")
+	@PostMapping()
 	public ResponseEntity<Object> salvaUsuario(@RequestBody Usuario usuario) {
 		try {
 			return ResponseEntity.ok().body(usuarioService.salvarUsuario(usuario));
@@ -47,12 +47,12 @@ public class UsuarioResource {
 		}
 	}
 
-	@PutMapping("/usuario")
+	@PutMapping()
 	public Usuario atualizaUsuario(@RequestBody Usuario usuario) {
 		return usuarioService.atualizarUsuario(usuario);
 	}
 	
-	@DeleteMapping("/usuario/{idUsuario}")
+	@DeleteMapping("/{idUsuario}")
 	public void deletaUsuario(@PathVariable Long idUsuario) {
 		usuarioService.deletarUsuario(idUsuario);
 	}

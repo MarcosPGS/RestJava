@@ -20,18 +20,18 @@ import com.unidesc.localiza.negocio.service.TurnoService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/turno")
 public class TurnoResource {
 	@Autowired
 	TurnoService turnoService;
 	
-	@GetMapping("/turno")
+	@GetMapping()
 	public List<Turno> buscaTurno(){
 		return turnoService.buscarTodosTurnos();
 	}
 	
 	
-	@GetMapping("/turno/descricao/{descricao}")
+	@GetMapping("/{descricao}")
 	public ResponseEntity<Turno> buscaPorTurno(@PathVariable String descricao){
 		Turno turnoEncontrado = turnoService.bucarPorTurno(descricao);
 		if(turnoEncontrado == null) {
@@ -40,7 +40,7 @@ public class TurnoResource {
 		return ResponseEntity.ok().body(turnoEncontrado);
 		
 	}
-	@PostMapping("/turno")
+	@PostMapping()
 	public ResponseEntity<Object> salvaTurno(@RequestBody Turno turno) {
 		try {
 			return ResponseEntity.ok().body( turnoService.salvarTurno(turno));
@@ -49,12 +49,12 @@ public class TurnoResource {
 		}
 	}
 	
-	@PutMapping("/turno")
+	@PutMapping()
 	public Turno atualizaTurno(@RequestBody Turno turno) {
 		return turnoService.atualizarTurno(turno);
 	}
 	
-	@DeleteMapping("/turno/{idTurno}")
+	@DeleteMapping("/{idTurno}")
 	public void deletaTurno(@PathVariable Long idTurno) {
 		turnoService.deletarTurno(idTurno);
 	}
