@@ -58,7 +58,7 @@ public class ProfessorResource {
 	}
 
 	// endpoint pesquisar todos os professor
-	@PostMapping("/pesquissar")
+	@PostMapping("/pesquisar")
 	public List<Professor> pesquisar(@RequestBody FiltroProfessor f) {
 		return professorService.pesquisar(f);
 	}

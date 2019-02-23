@@ -185,11 +185,11 @@ public class ProfessorRepositoryImpl implements ProfessorRepositoryQuery {
 				&& !StringUtils.isEmpty(f.getProfessor().getMatricula())) {
 			predicates.add(builder.equal(professorRoot.get("matricula"), f.getProfessor().getMatricula()));
 		}
-		if (!StringUtils.isEmpty(f) && !StringUtils.isEmpty(f.getDisciplina())) {
+		if (!StringUtils.isEmpty(f) && !StringUtils.isEmpty(f.getDisciplina()) && !StringUtils.isEmpty(f.getDisciplina().getIdDisciplina())) {
 			predicates.add(builder.equal(disciplinas.get("idDisciplina"), f.getDisciplina().getIdDisciplina()));
 		}
-		if (!StringUtils.isEmpty(f) && !StringUtils.isEmpty(f.getCurso())) {
-			predicates.add(builder.equal(cursos.get("idCursos"), f.getCurso().getIdCurso()));
+		if (!StringUtils.isEmpty(f) && !StringUtils.isEmpty(f.getCurso()) && !StringUtils.isEmpty(f.getCurso().getIdCurso())) {
+			predicates.add(builder.equal(cursos.get("idCurso"), f.getCurso().getIdCurso()));
 		}
 
 		return predicates.toArray(new Predicate[predicates.size()]);
