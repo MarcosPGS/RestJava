@@ -45,7 +45,7 @@ public class Usuario implements Serializable {
 	//failed to lazily initialize a collection of role: O LAZY NAO ESTA CARREGANDO OS SEUS RELACIONAMENTO
 	//POR ISSO USA O "EAGER" NESTE SENARIO;
 	@ManyToMany(fetch=FetchType.EAGER)
-    @JoinTable(name="usuario_permissao", joinColumns= {@JoinColumn(name="idusuario")},
+    @JoinTable(name="usuario_permissao", joinColumns= {@JoinColumn(name="idprofessor")},
     inverseJoinColumns = {@JoinColumn(name="idpermissao")})
 	private List<Permissao> permissaos;
 
