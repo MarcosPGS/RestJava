@@ -9,6 +9,7 @@ public class FiltroProfessor {
 	private Disciplina disciplina;
 	private Curso curso;
 	private Professor professor;
+	
 	public Disciplina getDisciplina() {
 		return disciplina;
 	}
@@ -27,10 +28,4 @@ public class FiltroProfessor {
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
-	
-	
-	
-	
-	
-
 }
