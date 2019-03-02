@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import com.unidesc.localiza.entity.Bloco;
 import com.unidesc.localiza.entity.Curso;
 import com.unidesc.localiza.entity.Disciplina;
 import com.unidesc.localiza.entity.Professor;
@@ -155,8 +156,9 @@ public class ProfessorRepositoryImpl implements ProfessorRepositoryQuery {
 			CriteriaQuery<Professor> professorCR = builder.createQuery(Professor.class);
 
 			Root<Professor> professorRoot = professorCR.from(Professor.class);
-			Join<Professor, Disciplina> disciplinas = professorRoot.join("disciplinas", JoinType.LEFT);
-			Join<Disciplina, Curso> cursos = disciplinas.join("cursos", JoinType.LEFT);
+			Join<Professor, Disciplina> disciplinas = professorRoot.join("disciplinas", JoinType.INNER);
+			Join<Disciplina, Curso> cursos = disciplinas.join("cursos", JoinType.INNER);
+//			Join<Disciplina, Bloco> blocos = disciplinas.join("blocos", JoinType.INNER);
 
 			Predicate[] predicates = criarRestricao(f, builder, professorRoot, disciplinas, cursos);
 			professorCR.where(predicates);
@@ -191,6 +193,10 @@ public class ProfessorRepositoryImpl implements ProfessorRepositoryQuery {
 		if (!StringUtils.isEmpty(f) && !StringUtils.isEmpty(f.getCurso()) && !StringUtils.isEmpty(f.getCurso().getIdCurso())) {
 			predicates.add(builder.equal(cursos.get("idCurso"), f.getCurso().getIdCurso()));
 		}
+		
+//		if (!StringUtils.isEmpty(f) && !StringUtils.isEmpty(f.getBloco()) && !StringUtils.isEmpty(f.getBloco().getIdBloco())) {
+//			predicates.add(builder.equal(blocos.get("idBloco"), f.getBloco().getIdBloco()));
+//		}
 
 		return predicates.toArray(new Predicate[predicates.size()]);
 

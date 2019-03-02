@@ -42,7 +42,7 @@ public class Professor implements Serializable {
 	private Usuario usuario;
 	
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="professor_disciplina", joinColumns= {@JoinColumn(name="idprofessor")},
     inverseJoinColumns = {@JoinColumn(name="iddisciplina")})
 	private List<Disciplina> disciplinas;

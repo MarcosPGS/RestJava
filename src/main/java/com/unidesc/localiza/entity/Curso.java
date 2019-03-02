@@ -33,11 +33,11 @@ public class Curso implements Serializable {
 	private String nome;
 	
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="curso_semestre", joinColumns = {@JoinColumn(name="idcurso")}, inverseJoinColumns= {@JoinColumn(name="idsemestre")})
 	private List<Semestre> semestres;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="curso_turno", joinColumns= {@JoinColumn(name="idcurso")}, inverseJoinColumns= {@JoinColumn(name="idturno")})
 	private List<Turno> turno;
 

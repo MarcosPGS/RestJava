@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,23 +30,21 @@ public class Disciplina implements Serializable {
 	@Column(name="nome")
 	private String nome;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="disciplina_diasemana", joinColumns= {@JoinColumn(name="iddisciplina")}, inverseJoinColumns = {@JoinColumn(name="iddiasemana")})
 	private List<DiaSemana> diaSemanas;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="disciplina_curso", joinColumns= {@JoinColumn(name="iddisciplina")}, inverseJoinColumns = {@JoinColumn(name="idcurso")})
 	private List<Curso> cursos;
 
-	@ManyToMany
-	@JoinTable(name="disciplina_local", joinColumns= {@JoinColumn(name="iddisciplina")}, inverseJoinColumns = {@JoinColumn(name="idlocal")})
-	private List<Local> locals;
+	
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="disciplina_bloco",joinColumns= {@JoinColumn(name="iddisciplina")},inverseJoinColumns= {@JoinColumn(name="idbloco")})
 	private List<Bloco> blocos;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="disciplina_sala",joinColumns= {@JoinColumn(name="iddisciplina")},inverseJoinColumns= {@JoinColumn(name="idsala")})
 	private List<Sala> salas;
 
@@ -81,14 +80,6 @@ public class Disciplina implements Serializable {
 		this.cursos = cursos;
 	}
 
-	public List<Local> getLocals() {
-		return locals;
-	}
-
-	public void setLocals(List<Local> locals) {
-		this.locals = locals;
-	}
-
 	public List<Bloco> getBlocos() {
 		return blocos;
 	}
@@ -104,8 +95,8 @@ public class Disciplina implements Serializable {
 	public void setSalas(List<Sala> salas) {
 		this.salas = salas;
 	}
-	
 
+	
 	
 	
 	
