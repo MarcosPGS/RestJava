@@ -41,6 +41,14 @@ public class Disciplina implements Serializable {
 	@JoinTable(name="disciplina_local", joinColumns= {@JoinColumn(name="iddisciplina")}, inverseJoinColumns = {@JoinColumn(name="idlocal")})
 	private List<Local> locals;
 
+	@ManyToMany
+	@JoinTable(name="disciplina_bloco",joinColumns= {@JoinColumn(name="iddisciplina")},inverseJoinColumns= {@JoinColumn(name="idbloco")})
+	private List<Bloco> blocos;
+	
+	@ManyToMany
+	@JoinTable(name="disciplina_sala",joinColumns= {@JoinColumn(name="iddisciplina")},inverseJoinColumns= {@JoinColumn(name="idsala")})
+	private List<Sala> salas;
+
 	public Long getIdDisciplina() {
 		return idDisciplina;
 	}
@@ -81,6 +89,24 @@ public class Disciplina implements Serializable {
 		this.locals = locals;
 	}
 
+	public List<Bloco> getBlocos() {
+		return blocos;
+	}
+
+	public void setBlocos(List<Bloco> blocos) {
+		this.blocos = blocos;
+	}
+
+	public List<Sala> getSalas() {
+		return salas;
+	}
+
+	public void setSalas(List<Sala> salas) {
+		this.salas = salas;
+	}
+	
+
+	
 	
 	
 

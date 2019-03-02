@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.unidesc.localiza.entity.Sala;
-import com.unidesc.localiza.exceptions.BlocoDuplicadoException;
 import com.unidesc.localiza.exceptions.SalaDuplicadaException;
 import com.unidesc.localiza.repository.SalaRepository;
 
