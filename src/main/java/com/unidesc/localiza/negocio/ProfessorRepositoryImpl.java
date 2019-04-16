@@ -8,18 +8,20 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Fetch;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.beans.FatalBeanException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import com.unidesc.localiza.entity.Bloco;
 import com.unidesc.localiza.entity.Curso;
 import com.unidesc.localiza.entity.Disciplina;
 import com.unidesc.localiza.entity.Professor;
@@ -57,12 +59,30 @@ public class ProfessorRepositoryImpl implements ProfessorRepositoryQuery {
 
 	}
 
-	private Predicate[] criarRestricao(String nome, CriteriaBuilder builder, Root<Professor> professorRoot) {
-		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.isEmpty(nome)) {
-			predicates.add(builder.like(builder.lower(professorRoot.get("nome")), "%" + (nome.toLowerCase()) + "%"));
+	@Override
+	public Professor buscarPorMatricula(String matricula) {
+
+		Professor professorEncontradaAtiva = null;
+
+		try {
+			CriteriaBuilder builder = manager.getCriteriaBuilder();
+			CriteriaQuery<Professor> professorCr = builder.createQuery(Professor.class);
+
+			Root<Professor> professorRoot = professorCr.from(Professor.class);
+
+			Predicate[] predicates = restricaoMatricula(matricula, builder, professorRoot);
+			professorCr.where(predicates);
+
+			TypedQuery<Professor> query = manager.createQuery(professorCr);
+
+			professorEncontradaAtiva = query.getSingleResult();
+			return professorEncontradaAtiva;
+
+		} catch (Exception e) {
+			return professorEncontradaAtiva;
+
 		}
-		return predicates.toArray(new Predicate[predicates.size()]);
+
 	}
 
 	@Override
@@ -87,6 +107,44 @@ public class ProfessorRepositoryImpl implements ProfessorRepositoryQuery {
 			return null;
 		}
 
+	}
+
+	@Override
+	public List<Professor> pesquisar(FiltroProfessor f) {
+		List<Professor> professorEncontado = null;
+		try {
+			CriteriaBuilder builder = manager.getCriteriaBuilder();
+			CriteriaQuery<Professor> professorCR = builder.createQuery(Professor.class);
+
+			Root<Professor> professorRoot = professorCR.from(Professor.class);
+
+//			professorCR.select(professorRoot); usando sem o distinct
+			professorCR.select(professorRoot).distinct(true);
+			Join<Professor, Disciplina> disciplinas = professorRoot.join("disciplinas", JoinType.INNER);
+
+			Join<Disciplina, Curso> cursos = disciplinas.join("cursos", JoinType.INNER);
+//			Join<Disciplina, Bloco> blocos = disciplinas.join("blocos", JoinType.INNER);
+
+			Predicate[] predicates = criarRestricao(f, builder, professorRoot, disciplinas, cursos);
+			professorCR.where(predicates);
+
+			TypedQuery<Professor> typedQuery = manager.createQuery(professorCR);
+
+			professorEncontado = typedQuery.getResultList();
+
+			return (List<Professor>) professorEncontado;
+		} catch (Exception e) {
+			return professorEncontado;
+		}
+
+	}
+
+	private Predicate[] criarRestricao(String nome, CriteriaBuilder builder, Root<Professor> professorRoot) {
+		List<Predicate> predicates = new ArrayList<>();
+		if (!StringUtils.isEmpty(nome)) {
+			predicates.add(builder.like(builder.lower(professorRoot.get("nome")), "%" + (nome.toLowerCase()) + "%"));
+		}
+		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 
 	private Long total(String nome) {
@@ -114,64 +172,12 @@ public class ProfessorRepositoryImpl implements ProfessorRepositoryQuery {
 
 	}
 
-	@Override
-	public Professor buscarPorMatricula(String matricula) {
-
-		Professor professorEncontradaAtiva = null;
-
-		try {
-			CriteriaBuilder builder = manager.getCriteriaBuilder();
-			CriteriaQuery<Professor> professorCr = builder.createQuery(Professor.class);
-
-			Root<Professor> professorRoot = professorCr.from(Professor.class);
-
-			Predicate[] predicates = restricaoMatricula(matricula, builder, professorRoot);
-			professorCr.where(predicates);
-
-			TypedQuery<Professor> query = manager.createQuery(professorCr);
-
-			professorEncontradaAtiva = query.getSingleResult();
-			return professorEncontradaAtiva;
-
-		} catch (Exception e) {
-			return professorEncontradaAtiva;
-
-		}
-
-	}
-
 	private Predicate[] restricaoMatricula(String matricula, CriteriaBuilder builder, Root<Professor> professorRoot) {
 		List<Predicate> predicates = new ArrayList<>();
 		if (!StringUtils.isEmpty(matricula)) {
 			predicates.add(builder.equal(professorRoot.get("matricula"), matricula));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
-	}
-
-	@Override
-	public List<Professor> pesquisar(FiltroProfessor f) {
-		List<Professor> professorEncontado = null;
-		try {
-			CriteriaBuilder builder = manager.getCriteriaBuilder();
-			CriteriaQuery<Professor> professorCR = builder.createQuery(Professor.class);
-
-			Root<Professor> professorRoot = professorCR.from(Professor.class);
-			Join<Professor, Disciplina> disciplinas = professorRoot.join("disciplinas", JoinType.INNER);
-			Join<Disciplina, Curso> cursos = disciplinas.join("cursos", JoinType.INNER);
-//			Join<Disciplina, Bloco> blocos = disciplinas.join("blocos", JoinType.INNER);
-
-			Predicate[] predicates = criarRestricao(f, builder, professorRoot, disciplinas, cursos);
-			professorCR.where(predicates);
-
-			TypedQuery<Professor> typedQuery = manager.createQuery(professorCR);
-
-			professorEncontado = typedQuery.getResultList();
-
-			return (List<Professor>) professorEncontado;
-		} catch (Exception e) {
-			return professorEncontado;
-		}
-
 	}
 
 	private Predicate[] criarRestricao(FiltroProfessor f, CriteriaBuilder builder, Root<Professor> professorRoot,
@@ -187,13 +193,15 @@ public class ProfessorRepositoryImpl implements ProfessorRepositoryQuery {
 				&& !StringUtils.isEmpty(f.getProfessor().getMatricula())) {
 			predicates.add(builder.equal(professorRoot.get("matricula"), f.getProfessor().getMatricula()));
 		}
-		if (!StringUtils.isEmpty(f) && !StringUtils.isEmpty(f.getDisciplina()) && !StringUtils.isEmpty(f.getDisciplina().getIdDisciplina())) {
+		if (!StringUtils.isEmpty(f) && !StringUtils.isEmpty(f.getDisciplina())
+				&& !StringUtils.isEmpty(f.getDisciplina().getIdDisciplina())) {
 			predicates.add(builder.equal(disciplinas.get("idDisciplina"), f.getDisciplina().getIdDisciplina()));
 		}
-		if (!StringUtils.isEmpty(f) && !StringUtils.isEmpty(f.getCurso()) && !StringUtils.isEmpty(f.getCurso().getIdCurso())) {
+		if (!StringUtils.isEmpty(f) && !StringUtils.isEmpty(f.getCurso())
+				&& !StringUtils.isEmpty(f.getCurso().getIdCurso())) {
 			predicates.add(builder.equal(cursos.get("idCurso"), f.getCurso().getIdCurso()));
 		}
-		
+
 //		if (!StringUtils.isEmpty(f) && !StringUtils.isEmpty(f.getBloco()) && !StringUtils.isEmpty(f.getBloco().getIdBloco())) {
 //			predicates.add(builder.equal(blocos.get("idBloco"), f.getBloco().getIdBloco()));
 //		}

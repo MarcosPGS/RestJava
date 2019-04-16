@@ -23,6 +23,7 @@ public class ProfessorService {
 	}
 
 	public List<Professor> buscarPorNome(String nome) {
+		
 		return professorRepository.buscarNome(nome);
 	}
 

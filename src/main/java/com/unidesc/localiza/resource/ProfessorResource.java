@@ -43,7 +43,7 @@ public class ProfessorResource {
 	public ResponseEntity<List<Professor>> buscaNome(@PathVariable String nome) {
 		List<Professor> professorResultado = professorService.buscarPorNome(nome);
 		if (professorResultado == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(professorResultado);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 
 		return ResponseEntity.ok().body(professorResultado);
